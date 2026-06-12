@@ -146,10 +146,10 @@
      flow full-bleed with normal page scroll. Avoids the nested-scroll/dark-
      chassis artifact a fixed-height bezel produces on narrow screens. */
   @media (max-width:540px){
-    html,body{background:var(--bg-screen)}
-    .stage{padding:0;gap:0;display:block;min-height:0}
+    html,body{background:var(--bg-screen);height:100%;overflow:hidden}
+    .stage{padding:0;gap:0;display:block;height:100%}
     .phone-label{display:none}
-    .device{width:100%;max-width:100%;height:100vh;height:100dvh;background:transparent;border-radius:0;padding:0;box-shadow:none}
+    .device{width:100%;max-width:100%;height:100%;background:transparent;border-radius:0;padding:0;box-shadow:none}
     .pscreen{border-radius:0;height:100%;overflow:hidden}
     .island,.status{display:none}
     .topbar{flex-shrink:0;z-index:30;background:#fff}

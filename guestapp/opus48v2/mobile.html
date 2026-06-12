@@ -264,11 +264,11 @@
   @media (max-width:1280px){.phone{transform:scale(.94);transform-origin:top center}}
   @media (max-width:900px){.stage{gap:24px;padding:60px 16px 32px}.phone{transform:scale(.9);transform-origin:top center}}
   @media (max-width:540px){
-    html,body{background:var(--bg-screen)}
-    .stage{padding:0;gap:0;display:block;min-height:0}
-    .phone-col{gap:0}
+    html,body{background:var(--bg-screen);height:100%;overflow:hidden}
+    .stage{padding:0;gap:0;display:block;height:100%}
+    .phone-col{gap:0;height:100%}
     .phone-label{display:none}
-    .phone{width:100%;max-width:100%;height:100vh;height:100dvh;background:transparent;border-radius:0;padding:0;box-shadow:none;transform:none}
+    .phone{width:100%;max-width:100%;height:100%;background:transparent;border-radius:0;padding:0;box-shadow:none;transform:none}
     .screen{border-radius:0;height:100%;overflow:hidden}
     .island,.status{display:none}
     .topbar{flex-shrink:0;z-index:30;background:#fff}
