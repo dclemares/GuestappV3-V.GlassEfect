@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chekin Guest App · 4.8 v2 — Prototype hub</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<style>
+  :root{
+    --bg-dark:#161643;--bg-screen:#F6F7FC;--bg-white:#fff;--bg-neutral-light:#F4F6F8;
+    --bg-blue-light:#F0F3FF;--bg-success-light:#E8FCF7;
+    --stroke-gray-lighter:#E8E9F1;--stroke-gray-light:#DEDEEB;--stroke-gray-medium:#CECEDE;
+    --text-dark:#161643;--text-gray-dark:#6B6B95;--text-gray-medium:#9696B9;--text-gray-light:#CECEDE;
+    --text-brand:#385CF8;--text-brand-dark:#2945C5;--text-success:#0F9F80;
+    --radius-lg:14px;--radius-xl:20px;
+    --shadow-card:0 1px 3px rgba(22,22,67,.05),0 0 0 1px rgba(22,22,67,.035);
+    --shadow-hover:0 16px 36px rgba(56,92,248,.14),0 3px 8px rgba(22,22,67,.06);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;min-height:100%;font-family:var(--font-primary);color:var(--text-dark);
+    background:radial-gradient(900px 480px at 18% -120px,#E3E9FF,transparent),var(--bg-screen);-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:56px 28px 80px}
+
+  .head{display:flex;align-items:flex-start;gap:16px;margin-bottom:8px}
+  .logo{width:52px;height:52px;border-radius:15px;background:linear-gradient(135deg,#385CF8,#2945C5);display:grid;place-items:center;flex-shrink:0;box-shadow:0 10px 24px -6px rgba(56,92,248,.5)}
+  .logo svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .kicker{font:700 11.5px var(--font-primary);letter-spacing:.16em;text-transform:uppercase;color:var(--text-brand)}
+  h1{font:800 30px/1.1 var(--font-primary);letter-spacing:-.02em;margin:6px 0 4px}
+  .sub{font:500 14.5px/1.5 var(--font-primary);color:var(--text-gray-dark);margin:0;max-width:560px}
+
+  .groups{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:38px}
+  @media (max-width:880px){.groups{grid-template-columns:1fr}}
+
+  .group{background:var(--bg-white);border:1px solid var(--stroke-gray-lighter);border-radius:var(--radius-xl);padding:22px 22px 26px}
+  .group-head{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+  .group-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex-shrink:0}
+  .group-ic.d{background:var(--bg-blue-light);color:var(--text-brand)}
+  .group-ic.m{background:var(--bg-success-light);color:var(--text-success)}
+  .group-ic svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.9}
+  .group-head h2{font:700 18px var(--font-primary);margin:0;letter-spacing:-.01em}
+  .group-head .cnt{font:600 12px var(--font-primary);color:var(--text-gray-medium)}
+  .group .note{font:500 12.5px/1.5 var(--font-primary);color:var(--text-gray-medium);margin:2px 0 16px}
+
+  .flow{position:relative}
+  .flow::before{content:"";position:absolute;left:30px;top:26px;bottom:26px;width:2px;background:var(--stroke-gray-light);z-index:0}
+  .card{position:relative;z-index:1;display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:var(--radius-lg);text-decoration:none;color:inherit;transition:background .14s,transform .12s,box-shadow .14s}
+  .card+.card{margin-top:4px}
+  .card:hover{background:#FBFBFE;transform:translateX(2px)}
+  .step{width:28px;height:28px;flex-shrink:0;border-radius:50%;background:var(--bg-white);border:2px solid var(--stroke-gray-light);display:grid;place-items:center;font:700 12px var(--font-primary);color:var(--text-gray-dark)}
+  .card:hover .step{border-color:var(--text-brand);color:var(--text-brand)}
+  .ic{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:var(--bg-neutral-light);color:var(--text-dark);display:grid;place-items:center}
+  .ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7}
+  .lt{flex:1;min-width:0}
+  .lt b{display:block;font:600 15px var(--font-primary)}
+  .lt small{display:block;font:400 12.5px/1.4 var(--font-primary);color:var(--text-gray-dark);margin-top:1px}
+  .badge{font:700 9.5px var(--font-primary);text-transform:uppercase;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:var(--bg-blue-light);color:var(--text-brand)}
+  .badge.demo{background:rgba(124,77,255,.12);color:#7C4DFF}
+  .chev{width:20px;height:20px;flex-shrink:0;stroke:var(--text-gray-light);fill:none;stroke-width:2;transition:stroke .12s,transform .12s}
+  .card:hover .chev{stroke:var(--text-brand);transform:translateX(3px)}
+
+  .foot{margin-top:30px;font:500 12.5px var(--font-primary);color:var(--text-gray-medium);text-align:center}
+  .foot a{color:var(--text-brand);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="head">
+    <div class="logo"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></div>
+    <div>
+      <div class="kicker">Chekin · Guest App</div>
+      <h1>Prototype hub · 4.8 v2</h1>
+      <p class="sub">Navigate every screen of the guest-app prototype. Pick a flow below — each card opens the screen; use your browser's back button to return here.</p>
+    </div>
+  </div>
+
+  <div class="groups">
+
+    <!-- DESKTOP -->
+    <section class="group">
+      <div class="group-head">
+        <div class="group-ic d"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div>
+          <h2>Desktop</h2>
+          <div class="cnt">5 screens</div>
+        </div>
+      </div>
+      <p class="note">Full dashboard layout with sidebar, main content and right rail.</p>
+      <div class="flow">
+        <a class="card" href="journey.html">
+          <span class="step">1</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></span>
+          <span class="lt"><b>Home</b><small>Dashboard, check-in journey, offers &amp; guidebook</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="registration.html">
+          <span class="step">2</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+          <span class="lt"><b>Guest registration</b><small>Summary of guests for the booking</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="identity.html">
+          <span class="step">3</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></span>
+          <span class="lt"><b>ID verification</b><small>Document scan + selfie flow</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="guestdetails.html">
+          <span class="step">4</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 4h6a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1V5a1 1 0 0 1 1-1Z"/><path d="m9.5 13 1.8 1.8 3.4-3.6"/></svg></span>
+          <span class="lt"><b>Guest details</b><small>Pre-filled entry form &amp; agreements</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="identity-cases.html">
+          <span class="step">★</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3L22 9.3l-5 4.8 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.8 6.9-1z"/></svg></span>
+          <span class="lt"><b>IV use cases</b><small>6 scenarios: happy path, errors, passport, no selfie</small></span>
+          <span class="badge demo">Demo</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- MOBILE -->
+    <section class="group">
+      <div class="group-head">
+        <div class="group-ic m"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 19h4"/></svg></div>
+        <div>
+          <h2>Mobile</h2>
+          <div class="cnt">4 screens</div>
+        </div>
+      </div>
+      <p class="note">Phone-framed views — home (M1·M2·M3), summary, IV flow &amp; form.</p>
+      <div class="flow">
+        <a class="card" href="mobile.html">
+          <span class="step">1</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></span>
+          <span class="lt"><b>Home <span class="badge">M1·M2·M3</span></b><small>Vela chat, tasks &amp; check-in, discover</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="registration-mobile.html">
+          <span class="step">2</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+          <span class="lt"><b>Guest registration</b><small>Guest summary + quick actions</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="identity-mobile.html">
+          <span class="step">3</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="12" r="2.5"/><path d="M14 10h4M14 14h4"/></svg></span>
+          <span class="lt"><b>ID verification</b><small>Document scan + selfie flow</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+        <a class="card" href="guestdetails-mobile.html">
+          <span class="step">4</span>
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M9 4h6a1 1 0 0 1 1 1v1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h1V5a1 1 0 0 1 1-1Z"/><path d="m9.5 13 1.8 1.8 3.4-3.6"/></svg></span>
+          <span class="lt"><b>Guest details</b><small>Entry form &amp; agreements</small></span>
+          <svg class="chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+    </section>
+
+  </div>
+
+  <p class="foot">Tip: the mobile flow chains automatically — <em>Add guest → ID verification → Guest details</em>. · <a href="../index.html">Original variant switcher ↗</a></p>
+</div>
+</body>
+</html>

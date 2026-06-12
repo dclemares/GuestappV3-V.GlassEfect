@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chekin Guest — Guest registration (Opus 4.8 v2)</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<link rel="stylesheet" href="_v2.css">
+<link rel="stylesheet" href="../_chek.css">
+<script src="../_chek.js" defer></script>
+<style>
+  /* ───── Guest summary — adapted to 4.8 v2 ───── */
+  .gsum{display:flex;flex-direction:column}
+  .grow{position:relative;display:flex;align-items:stretch;justify-content:space-between;gap:0;min-height:60px;border-top:1px solid var(--stroke-gray-lighter);text-decoration:none;color:inherit}
+  .grow:first-child{border-top:none}
+  .grow::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;z-index:2}
+  .grow.complete::before{background:var(--text-success)}
+  .grow.incomplete::before{background:#EBA13C}
+  .grow.action{cursor:pointer;transition:background .14s}
+  .grow.action:hover{background:#FBFBFE}
+  .grow .gmain{flex:1;display:flex;align-items:center;gap:11px;min-width:0;padding:0 18px 0 26px}
+  .gname{font:700 14.5px/1.25 var(--font-primary);color:var(--text-dark)}
+  .gsub{font:400 12px var(--font-primary);color:var(--text-gray-medium);margin-top:2px}
+  .gside{display:flex;align-items:center;justify-content:flex-end;gap:12px;padding:0 18px 0 64px;flex-shrink:0;
+    clip-path:polygon(20px 0,100% 0,100% 100%,0 100%)}
+  .complete .gside{background:linear-gradient(111deg,rgba(15,159,128,0) 0%,rgba(15,159,128,0) 26%,rgba(15,159,128,.12) 64%,rgba(15,159,128,.22) 100%)}
+  .incomplete .gside{background:linear-gradient(111deg,rgba(235,161,60,0) 0%,rgba(235,161,60,0) 26%,rgba(235,161,60,.16) 64%,rgba(235,161,60,.30) 100%)}
+  .state-copy{display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+  .gstate{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--font-primary);text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+  .gstate svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2}
+  .gstate.complete{color:var(--text-success)}
+  .gstate.incomplete{color:var(--text-warn)}
+  .gfinish{font:500 12px var(--font-primary);color:var(--text-warn);white-space:nowrap}
+  .garrow{width:16px;height:22px;flex:none;display:grid;place-items:center}
+  .garrow svg{width:16px;height:16px;stroke:var(--text-warn);fill:none;stroke-width:2.4;transition:transform .16s}
+  .grow.action:hover .garrow svg{transform:translateX(3px)}
+  /* add guest row */
+  .add-row{background:rgba(244,246,251,.7);min-height:58px}
+  .add-row:hover{background:#EEF1FA}
+  .add-row .gmain{padding-left:26px}
+  .add-ic{width:28px;height:28px;border-radius:8px;flex:none;display:grid;place-items:center;background:var(--bg-blue-light);color:var(--text-brand)}
+  .add-ic svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.2}
+  .add-title{font:700 13.5px var(--font-primary);color:var(--text-brand)}
+  /* rail registration progress */
+  .reg-prog{margin-top:18px}
+  .reg-prog .eyebrow{font:700 10.5px var(--font-primary);color:var(--text-gray-medium);text-transform:uppercase;letter-spacing:.12em;padding-bottom:9px;margin-bottom:12px;border-bottom:1px solid var(--stroke-gray-lighter);position:relative}
+  .reg-prog .eyebrow::after{content:"";position:absolute;left:0;bottom:-1px;width:26px;height:2px;border-radius:2px;background:var(--text-brand)}
+  .reg-prog .vp-title{display:flex;align-items:center;gap:9px;font:600 14px/19px var(--font-primary);color:var(--text-dark)}
+  .reg-prog .vp-title svg{width:17px;height:17px;stroke:var(--text-brand);fill:none;stroke-width:2;flex-shrink:0}
+  .reg-prog .vp-sub{font:400 12.5px/18px var(--font-primary);color:var(--text-gray-dark);margin:6px 0 0}
+  .reg-stat{display:flex;align-items:baseline;gap:6px;margin-top:14px}
+  .reg-num{font:800 26px var(--font-primary);color:var(--text-dark);line-height:1;letter-spacing:-.02em}
+  .reg-total{font:700 15px var(--font-primary);color:var(--text-gray-medium)}
+  .reg-lbl{margin-left:5px;font:400 12px var(--font-primary);color:var(--text-gray-dark)}
+  .reg-bar{margin-top:12px;height:7px;border-radius:99px;background:var(--bg-neutral-cold);overflow:hidden}
+  .reg-bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#0F9F80,#2FE0B4)}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Sidebar -->
+  <aside class="side">
+    <div class="prop">
+      <div class="av"><svg viewBox="0 0 24 24"><path d="M3 9 12 2l9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+      <div>
+        <div class="name">Puerta del Sol</div>
+        <div class="ref">VH-2026-0847</div>
+      </div>
+    </div>
+    <nav>
+      <a class="n-item" href="journey.html" style="text-decoration:none;color:inherit">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        Home
+      </a>
+      <div class="sgroup">Before your stay</div>
+      <a class="n-item active" href="registration.html" style="text-decoration:none;color:inherit">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        Guest registration
+        <span class="badge">1 left</span>
+      </a>
+      <a class="n-item" href="identity-cases.html" style="text-decoration:none;color:inherit">
+        <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3L22 9.3l-5 4.8 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.8 6.9-1z"/></svg>
+        IV use cases
+        <span class="badge new">DEMO</span>
+      </a>
+    </nav>
+    <div class="me">
+      <div class="av">CS</div>
+      <div>
+        <div class="n">Carmen Specimen</div>
+        <div class="e">carmen@email.com</div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <div class="shell">
+      <a class="back-link reveal" href="journey.html"><svg viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>Back to Home</a>
+
+      <div class="page-head reveal" style="animation-delay:.04s">
+        <div class="kicker">Guest summary</div>
+        <h1>Who are we registering now?</h1>
+        <p class="intro">You can register one guest or everyone in this same session.</p>
+      </div>
+
+      <!-- Responsible for booking -->
+      <section class="card section reveal" style="animation-delay:.08s">
+        <div class="fhead"><h2 class="ttl"><svg viewBox="0 0 24 24"><path d="m12 4 3 6 6 .8-4.4 4.2 1.1 6-5.7-2.9L6.3 21l1.1-6L3 10.8 9 10l3-6Z"/></svg>Responsible for booking</h2></div>
+        <div class="gsum">
+          <article class="grow complete">
+            <div class="gmain">
+              <div><div class="gname">Carmen Specimen</div><div class="gsub">You · primary guest</div></div>
+            </div>
+            <div class="gside">
+              <span class="gstate complete"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="m8.5 12.2 2.3 2.3 4.8-5"/></svg>Complete</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Other guests -->
+      <section class="card section reveal" style="animation-delay:.12s">
+        <div class="fhead"><h2 class="ttl"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></svg>Other guests</h2></div>
+        <div class="gsum">
+          <a class="grow action incomplete" href="identity.html">
+            <div class="gmain">
+              <div><div class="gname">Marta García López</div></div>
+            </div>
+            <div class="gside">
+              <span class="state-copy">
+                <span class="gstate incomplete"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>Incomplete</span>
+                <span class="gfinish">Finish registration</span>
+              </span>
+              <span class="garrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+            </div>
+          </a>
+          <a class="grow action add-row" href="identity.html">
+            <span class="gmain">
+              <span class="add-ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </a>
+        </div>
+      </section>
+
+      <!-- Minors -->
+      <section class="card section reveal" style="animation-delay:.16s">
+        <div class="fhead"><h2 class="ttl"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 21c.8-4.1 3.3-6.2 7-6.2s6.2 2.1 7 6.2"/><path d="M8 3.8C8.9 2.7 10.3 2 12 2s3.1.7 4 1.8"/></svg>Minors — under 18</h2></div>
+        <div class="gsum">
+          <a class="grow action add-row" href="guestdetails.html">
+            <span class="gmain">
+              <span class="add-ic"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="add-title">Add guest</span>
+            </span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- Rail: Vela + registration progress -->
+  <aside class="rail">
+    <div class="vrail reveal" style="animation-delay:.1s">
+      <div class="vh">
+        <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+        <div>
+          <div class="t">Vela</div>
+          <div class="d">Here to help</div>
+        </div>
+      </div>
+      <p class="intro">I can help you invite guests, finish pending forms, and keep the booking ready before arrival. Minors only fill the guest form — identity verification isn't required.</p>
+
+      <div class="reg-prog">
+        <div class="eyebrow">Your progress</div>
+        <div class="vp-title"><svg viewBox="0 0 24 24"><path d="M12 3 5 6v5c0 4.3 2.9 7.6 7 9 4.1-1.4 7-4.7 7-9V6l-7-3Z"/></svg>Register every guest before arrival.</div>
+        <p class="vp-sub">Finish the pending registrations so your guests can check in without waiting.</p>
+        <div class="reg-stat"><span class="reg-num">1</span><span class="reg-total">/ 2</span><span class="reg-lbl">guests registered</span></div>
+        <div class="reg-bar"><i style="width:50%"></i></div>
+      </div>
+    </div>
+  </aside>
+</div>
+</body>
+</html>

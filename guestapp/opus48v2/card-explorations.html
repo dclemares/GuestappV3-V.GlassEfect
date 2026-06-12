@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Card explorations — traveler</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<style>
+  :root{
+    --blue:#2f7fd6; --blue-deep:#1e58b0; --blue-ink:#10254f;
+    --img:url(assets/traveler.jpg);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#eef1fb;font-family:var(--font-primary,system-ui);color:#10254f;
+    -webkit-font-smoothing:antialiased;padding:48px 24px 80px}
+  h1.page{font:800 22px/1 var(--font-primary);letter-spacing:-.02em;text-align:center;margin:0 0 6px}
+  p.page{font:500 13px var(--font-primary);color:#5a6695;text-align:center;margin:0 0 40px}
+  .grid{display:flex;flex-wrap:wrap;gap:34px;justify-content:center;align-items:flex-start;max-width:1180px;margin:0 auto}
+  .col{width:360px;display:flex;flex-direction:column;gap:10px}
+  .lab{font:800 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:#8a93b8}
+  .card{width:360px;border-radius:22px;overflow:hidden;position:relative;font-family:var(--font-primary)}
+
+  /* shared */
+  .btn{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 18px;border-radius:11px;border:0;
+    font:800 13px var(--font-primary);cursor:pointer;text-decoration:none}
+  .btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2.4}
+
+  /* ───────── A · Split blue (foto sangra a la derecha, fondo extendido) ───────── */
+  .cA{height:200px;background:linear-gradient(105deg,var(--blue-deep),var(--blue) 60%,#56a0e6);display:flex;align-items:center}
+  .cA .ph{position:absolute;right:-10px;top:0;bottom:0;width:56%;background:var(--img) right center/cover;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 28%);mask-image:linear-gradient(90deg,transparent,#000 28%)}
+  .cA .tx{position:relative;z-index:2;padding:0 0 0 24px;width:60%;color:#fff}
+  .cA .kik{font:800 9.5px var(--font-primary);letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+  .cA h3{font:800 21px/1.12 var(--font-primary);letter-spacing:-.02em;margin:8px 0 14px}
+  .cA .btn{background:#fff;color:var(--blue-deep);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+
+  /* ───────── B · Glass overlay (foto full + panel glass abajo) ───────── */
+  .cB{height:300px;background:var(--img) center/cover}
+  .cB::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(16,37,79,0) 40%,rgba(16,37,79,.55))}
+  .cB .glass{position:absolute;left:14px;right:14px;bottom:14px;z-index:2;padding:14px 16px;border-radius:16px;
+    background:rgba(255,255,255,.16);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
+    border:1px solid rgba(255,255,255,.35);color:#fff;display:flex;align-items:center;gap:12px}
+  .cB .glass .b{flex:1}
+  .cB .glass b{display:block;font:800 15px var(--font-primary);letter-spacing:-.01em}
+  .cB .glass small{display:block;font:600 11.5px var(--font-primary);opacity:.9;margin-top:2px}
+  .cB .glass .btn{background:#fff;color:var(--blue-deep);height:38px}
+
+  /* ───────── C · Boarding pass (ticket con muesca + dashed) ───────── */
+  .cC{background:#fff;box-shadow:0 16px 40px -16px rgba(16,37,79,.4)}
+  .cC .top{height:150px;background:var(--img) center 22%/cover;position:relative}
+  .cC .top::after{content:"";position:absolute;inset:0;background:linear-gradient(120deg,rgba(30,88,176,.55),transparent 60%)}
+  .cC .top .pill{position:absolute;top:12px;left:12px;z-index:2;background:rgba(255,255,255,.9);color:var(--blue-deep);
+    font:800 9px var(--font-primary);letter-spacing:.1em;text-transform:uppercase;padding:5px 10px;border-radius:999px}
+  .cC .body{padding:16px 18px 18px;position:relative}
+  .cC .body::before,.cC .body::after{content:"";position:absolute;top:-11px;width:22px;height:22px;border-radius:50%;background:#eef1fb}
+  .cC .body::before{left:-11px}.cC .body::after{right:-11px}
+  .cC h3{font:800 17px var(--font-primary);letter-spacing:-.01em;margin:0 0 2px}
+  .cC .sub{font:600 12px var(--font-primary);color:#5a6695;margin:0 0 12px}
+  .cC .dash{border-top:2px dashed #dfe5f4;margin:0 0 12px}
+  .cC .row{display:flex;justify-content:space-between;align-items:center}
+  .cC .row .price{font:800 20px var(--font-primary);color:var(--blue-deep)}
+  .cC .row .price small{font:700 11px var(--font-primary);color:#9aa4c8}
+  .cC .btn{background:var(--blue-deep);color:#fff}
+
+  /* ───────── D · Diagonal split ───────── */
+  .cD{height:210px;background:#fff;display:flex}
+  .cD .ph{width:48%;background:var(--img) center/cover;clip-path:polygon(0 0,100% 0,72% 100%,0 100%)}
+  .cD .tx{flex:1;padding:22px 20px 22px 6px;display:flex;flex-direction:column;justify-content:center}
+  .cD .kik{font:800 9.5px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--blue)}
+  .cD h3{font:800 19px/1.15 var(--font-primary);letter-spacing:-.02em;margin:7px 0 12px;color:var(--blue-ink)}
+  .cD .btn{align-self:flex-start;background:linear-gradient(120deg,var(--blue-deep),var(--blue));color:#fff;box-shadow:0 8px 18px rgba(47,127,214,.35)}
+
+  /* ───────── E · Portrait circular (welcome) ───────── */
+  .cE{background:radial-gradient(120% 90% at 80% -10%,#5aa0e6,var(--blue) 45%,var(--blue-deep));padding:24px 22px;color:#fff;display:flex;align-items:center;gap:16px}
+  .cE .av{width:96px;height:96px;border-radius:50%;flex:none;background:var(--img) center 18%/180% ;box-shadow:0 0 0 4px rgba(255,255,255,.35),0 12px 26px rgba(0,0,0,.25)}
+  .cE .b b{display:block;font:800 18px/1.1 var(--font-primary);letter-spacing:-.01em}
+  .cE .b small{display:block;font:600 12px var(--font-primary);opacity:.9;margin-top:4px}
+  .cE .b .btn{margin-top:13px;height:34px;background:rgba(255,255,255,.2);color:#fff;border:1px solid rgba(255,255,255,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+
+  /* ───────── F · Sticker promo (badge rotado) ───────── */
+  .cF{height:220px;background:var(--img) center 20%/cover;overflow:visible}
+  .cF::after{content:"";position:absolute;inset:0;border-radius:22px;background:linear-gradient(200deg,rgba(30,88,176,.15),rgba(16,37,79,.62))}
+  .cF .star{position:absolute;top:-16px;right:18px;z-index:5;width:74px;height:74px;display:grid;place-items:center;color:#fff;font:900 11px/1 var(--font-primary);text-align:center;transform:rotate(9deg);filter:drop-shadow(0 10px 16px rgba(7,21,77,.35))}
+  .cF .star::before{content:"";position:absolute;inset:0;background:#ff5a64;clip-path:polygon(50% 0,61% 12%,76% 6%,79% 23%,95% 25%,90% 41%,100% 50%,90% 59%,95% 75%,79% 77%,76% 94%,61% 88%,50% 100%,39% 88%,24% 94%,21% 77%,5% 75%,10% 59%,0 50%,10% 41%,5% 25%,21% 23%,24% 6%,39% 12%)}
+  .cF .star span{position:relative;z-index:2}
+  .cF .tx{position:absolute;left:18px;right:18px;bottom:16px;z-index:3;color:#fff}
+  .cF .kik{font:800 9.5px var(--font-primary);letter-spacing:.16em;text-transform:uppercase;opacity:.92}
+  .cF h3{font:900 22px/1.1 var(--font-primary);letter-spacing:-.02em;margin:6px 0 12px;max-width:230px;color:#fff;text-shadow:0 1px 10px rgba(8,10,35,.4)}
+  .cF .btn{background:#fff;color:var(--blue-ink)}
+</style>
+</head>
+<body>
+  <h1 class="page">Card explorations</h1>
+  <p class="page">6 direcciones con la imagen del viajero · elige por dónde tirar</p>
+
+  <div class="grid">
+
+    <div class="col">
+      <span class="lab">A · Split blue · foto sangrada</span>
+      <div class="card cA">
+        <div class="ph"></div>
+        <div class="tx">
+          <div class="kik">All set</div>
+          <h3>Your trip is<br>ready to go</h3>
+          <a class="btn">View trip <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">B · Glass overlay</span>
+      <div class="card cB">
+        <div class="glass">
+          <div class="b"><b>Everything's confirmed</b><small>Check-in · keys · guidebook ready</small></div>
+          <a class="btn">Open</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">C · Boarding pass</span>
+      <div class="card cC">
+        <div class="top"><span class="pill">Puerta del Sol</span></div>
+        <div class="body">
+          <h3>You're checked in</h3>
+          <p class="sub">18–23 May · 2 guests</p>
+          <div class="dash"></div>
+          <div class="row">
+            <div class="price">14:00 <small>arrival</small></div>
+            <a class="btn">Get keys <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">D · Diagonal split</span>
+      <div class="card cD">
+        <div class="ph"></div>
+        <div class="tx">
+          <div class="kik">Before arrival</div>
+          <h3>Pack light, we've got the rest</h3>
+          <a class="btn">Drop your bags <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">E · Portrait welcome</span>
+      <div class="card cE">
+        <div class="av"></div>
+        <div class="b">
+          <b>Welcome, Marta</b>
+          <small>Your stay starts in 3 days</small>
+          <a class="btn">See checklist</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">F · Sticker promo</span>
+      <div class="card cF">
+        <span class="star"><span>SAVE<br>15%</span></span>
+        <div class="tx">
+          <div class="kik">Early check-in</div>
+          <h3>Arrive before 15:00</h3>
+          <a class="btn">Add · from €25</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <span class="lab">G · Diagonal split · early check-in</span>
+      <div class="card cD">
+        <div class="ph"></div>
+        <div class="tx">
+          <div class="kik">Early check-in</div>
+          <h3>Arrive before 15:00?</h3>
+          <a class="btn">Add · from €25</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

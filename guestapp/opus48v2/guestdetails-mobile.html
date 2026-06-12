@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chekin Guest — Guest details · Mobile (Opus 4.8 v2)</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<link rel="stylesheet" href="_v2.css">
+<link rel="stylesheet" href="../_chek.css">
+<script src="../_chek.js" defer></script>
+<style>
+  html,body{background:radial-gradient(1100px 560px at 50% -180px,#DCE4FF,transparent),#EEF1FB;min-height:100vh}
+  .stage{display:flex;flex-direction:column;align-items:center;gap:14px;padding:40px 24px 56px;min-height:100vh}
+  .phone-label{font:600 11.5px var(--font-primary);color:var(--text-gray-dark);letter-spacing:.08em;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;align-self:center}
+  .phone-label .pip{font:700 9px var(--font-primary);color:var(--text-brand);background:var(--bg-blue-light);padding:2px 7px;border-radius:4px;letter-spacing:.04em}
+  .device{width:393px;max-width:100%;height:852px;background:#0A0A1A;border-radius:50px;padding:9px;align-self:center;
+    box-shadow:0 30px 60px rgba(22,22,67,.22),0 10px 24px rgba(22,22,67,.12),0 0 0 1px rgba(22,22,67,.06),inset 0 0 0 2px rgba(255,255,255,.06);position:relative}
+  .pscreen{width:100%;height:100%;background:#fff;border-radius:42px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .island{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:34px;background:#000;border-radius:18px;z-index:50}
+  .status{display:flex;align-items:center;justify-content:space-between;padding:14px 28px 10px;font:600 14px var(--font-primary);color:var(--text-dark);font-variant-numeric:tabular-nums;flex-shrink:0;height:48px}
+  .status .right{display:inline-flex;align-items:center;gap:6px}
+  .status .right svg{width:14px;height:14px;stroke:currentColor;fill:currentColor}
+  .status .batt .b{width:22px;height:11px;border:1.4px solid currentColor;border-radius:3px;padding:1px;display:inline-block;position:relative}
+  .status .batt .b::after{content:"";position:absolute;right:-3px;top:3px;width:2px;height:5px;background:currentColor;border-radius:0 1px 1px 0}
+  .status .batt .b::before{content:"";display:block;width:82%;height:100%;background:currentColor;border-radius:1px}
+  .topbar{display:flex;align-items:center;gap:10px;padding:8px 14px 10px;border-bottom:1px solid var(--stroke-gray-lighter);background:#fff;flex-shrink:0;position:relative;z-index:5}
+  .topbar .nav{width:36px;height:36px;border-radius:10px;background:var(--bg-neutral-light);border:none;display:grid;place-items:center;color:var(--text-dark);cursor:pointer;text-decoration:none}
+  .topbar .nav svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+  .topbar .titl{flex:1;min-width:0}
+  .topbar .titl .t{font:700 14px var(--font-primary);color:var(--text-dark)}
+  .topbar .titl .s{font:500 11px var(--font-primary);color:var(--text-gray-dark)}
+  .topbar .vela{position:relative;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#385CF8,#8CA5FF);color:#fff;border:none;display:grid;place-items:center;cursor:pointer;flex-shrink:0;isolation:isolate;box-shadow:0 4px 12px rgba(56,92,248,.34)}
+  .topbar .vela svg{width:18px;height:18px;fill:currentColor;stroke:none}
+  .topbar .vela::before{content:"";position:absolute;inset:-6px;border-radius:50%;background:radial-gradient(circle,rgba(56,92,248,.5),transparent 60%);filter:blur(8px);opacity:.55;z-index:-1;animation:aura 3.6s ease-in-out infinite}
+  @keyframes aura{0%,100%{transform:scale(.85);opacity:.4}50%{transform:scale(1.18);opacity:.85}}
+  .topbar .brandmark{width:38px;display:flex;align-items:center;justify-content:flex-end;flex-shrink:0;margin-right:5px}
+  .topbar .brandmark svg{width:28px;height:28px}
+  /* modal as a bottom sheet inside the phone frame */
+  .pscreen .modal-overlay{position:absolute;inset:0;align-items:flex-end;justify-content:stretch;padding:0;border-radius:42px}
+  .pscreen .modal-card{max-width:none;width:100%;border-radius:22px 22px 0 0;padding:14px 22px 26px;animation:sheetUp .32s cubic-bezier(.2,.8,.3,1) both}
+  .pscreen .modal-card::before{content:"";display:block;width:40px;height:4px;border-radius:99px;background:var(--stroke-gray-medium);margin:0 auto 16px}
+  .pscreen .modal-title{font-size:21px;font-weight:600;letter-spacing:-.015em}
+  .pscreen .modal-ic{border:1.5px solid currentColor}
+  .pscreen .modal-btn.ghost{background:transparent;border:none;color:var(--text-gray-dark);height:38px}
+  .pscreen .modal-btn.ghost:hover{background:transparent;color:var(--text-dark);text-decoration:underline}
+  .pscreen .modal-text{font-size:13px;margin-bottom:16px}
+  .pscreen .modal-btn{height:46px;font-size:14px}
+  @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  /* full-screen success takeover */
+  .done-screen{position:absolute;top:103px;left:0;right:0;bottom:0;z-index:80;background:#fff;border-radius:0 0 42px 42px;display:flex;flex-direction:column;padding:20px 18px 22px;overflow-y:auto;animation:dsIn .3s ease both}
+  .done-screen[hidden]{display:none}
+  .done-screen::before{content:"";position:absolute;top:0;left:0;right:0;height:160px;background:
+      linear-gradient(180deg,rgba(255,255,255,0) 60%,rgba(255,255,255,.5) 80%,#fff 96%),
+      radial-gradient(70% 60% at 18% 14%, rgba(13,120,90,.92), transparent 62%),
+      radial-gradient(60% 55% at 82% 8%, rgba(34,180,130,.82), transparent 60%),
+      radial-gradient(65% 60% at 55% 48%, rgba(150,235,200,.75), transparent 62%),
+      radial-gradient(70% 70% at 88% 80%, rgba(255,255,255,.92), transparent 60%),
+      radial-gradient(75% 70% at 8% 78%, rgba(190,245,225,.9), transparent 62%),
+      linear-gradient(180deg,#17956b 0%,#5fd0a6 45%,#c7f0e0 72%,#eefcf7 100%);
+    filter:blur(14px) saturate(1.2);z-index:0;pointer-events:none}
+  .done-screen>*{position:relative;z-index:1}
+  .done-screen .ds-main{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+  @keyframes dsIn{from{opacity:0}to{opacity:1}}
+  .done-screen .ds-check{width:118px;height:118px;border-radius:50%;margin:24px auto 0;display:grid;place-items:center;border:2.5px solid #57bf9c;background:transparent;position:relative;box-shadow:0 0 13px 4px rgba(255,255,255,.9),inset 0 0 11px 2px rgba(255,255,255,.85)}
+  .done-screen .ds-check::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#f3faf7}
+  .done-screen .ds-check svg{position:relative;z-index:1;width:44px;height:44px;stroke:#3f9b7e;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+  .done-screen .ds-check svg .ow{stroke:#fff;stroke-width:5.1}
+  .done-screen .ds-title{font:700 24px/1.2 var(--font-primary);text-align:center;letter-spacing:-.02em;margin:0;color:#fff;text-shadow:0 1px 8px rgba(8,10,35,.4)}
+  .done-screen .ds-sub{font:500 14px var(--font-primary);color:rgba(255,255,255,.92);text-align:center;margin:9px 0 0;text-shadow:0 1px 6px rgba(8,10,35,.3)}
+  .done-screen .ds-card{margin-top:26px;padding:0;background:none}
+  .done-screen .ds-top{display:flex;align-items:center;justify-content:space-between}
+  .done-screen .ds-top b{font:700 11px var(--font-primary);text-transform:uppercase;letter-spacing:.08em;color:var(--text-dark)}
+  .done-screen .ds-top .pct{font:700 15px var(--font-primary);color:var(--text-success)}
+  .done-screen .ds-bar{height:7px;border-radius:99px;background:var(--bg-neutral-cold);overflow:hidden;margin:12px 0 5px}
+  .done-screen .ds-bar i{display:block;height:100%;width:60%;border-radius:99px;background:linear-gradient(90deg,#0F9F80,#2FE0B4)}
+  .done-screen .ds-next{font:400 12.5px/1.45 var(--font-primary);color:var(--text-gray-medium);margin:0}
+  .done-screen .ds-deal{position:relative;overflow:hidden;margin-top:0;display:flex;align-items:center;gap:11px;padding:11px 14px 11px 18px;border:none;border-radius:0;background:linear-gradient(90deg,rgba(238,241,251,.95),rgba(238,241,251,.3) 80%,rgba(238,241,251,0));-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);text-decoration:none;color:inherit}
+  .done-screen .ds-deal::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--text-brand)}
+  .done-screen .ds-deal-head{margin:22px 0 8px 2px;font:700 11px var(--font-primary);color:var(--text-dark);text-transform:uppercase;letter-spacing:.08em}
+  .done-screen .ds-deal-ic{width:38px;height:38px;border-radius:10px;flex-shrink:0;background:var(--text-brand);display:grid;place-items:center}
+  .done-screen .ds-deal-ic svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:1.6;opacity:.95}
+  .done-screen .ds-deal-b{padding:0;flex:1;display:flex;flex-direction:column;justify-content:center;gap:2px;min-width:0}
+  .done-screen .ds-deal-kik{font:700 14px var(--font-primary);color:var(--text-dark);letter-spacing:-.01em;text-transform:none}
+  .done-screen .ds-deal-t{font:700 14px/16px var(--font-primary);color:var(--text-dark)}
+  .done-screen .ds-deal-d{font:400 11.5px var(--font-primary);color:var(--text-gray-dark)}
+  .done-screen .ds-deal-d b{color:var(--text-dark)}
+  .done-screen .ds-dsplit{margin:auto 0;height:120px;border-radius:14px;overflow:hidden;background:#fff;display:flex}
+  .done-screen .ds-dsplit .ph{width:46%;flex:none;background:url(assets/traveler.jpg) center/cover;clip-path:polygon(0 0,100% 0,74% 100%,0 100%)}
+  .done-screen .ds-dsplit .tx{flex:1;padding:14px 16px 14px 4px;display:flex;flex-direction:column;justify-content:center}
+  .done-screen .ds-dsplit .kik{font:800 9px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-brand)}
+  .done-screen .ds-dsplit h3{font:800 16px/1.12 var(--font-primary);letter-spacing:-.02em;margin:6px 0 11px;color:var(--text-dark)}
+  .done-screen .ds-dsplit .btn{align-self:flex-start;display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:10px;border:0;background:var(--text-brand);color:#fff;font:800 12.5px var(--font-primary);text-decoration:none;cursor:pointer}
+  .done-screen .ds-actions{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .done-screen .ds-btn{height:48px;border-radius:12px;font:700 14.5px var(--font-primary);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;border:0}
+  .done-screen .ds-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2}
+  .done-screen .ds-btn.primary{background:var(--text-brand);color:#fff}
+  .done-screen .ds-btn.ghost{background:none;color:var(--text-dark);border:0}
+  /* contextual Vela helper card */
+  .vtip{display:flex;gap:11px;margin-top:5px;background:linear-gradient(180deg,rgba(56,92,248,.13),rgba(56,92,248,.05) 80%,rgba(56,92,248,0));-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;border-radius:14px;padding:13px 14px}
+  .vtip .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#385CF8,#8CA5FF);color:#fff;display:grid;place-items:center;flex-shrink:0;box-shadow:0 3px 9px rgba(56,92,248,.3)}
+  .vtip .av svg{width:15px;height:15px;fill:#fff;stroke:none}
+  .vtip .b{flex:1;min-width:0}
+  .vtip .eye{font:700 9.5px var(--font-primary);color:var(--text-brand);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
+  .vtip .item{margin-top:9px}
+  .vtip .item:first-of-type{margin-top:0}
+  .vtip .item .t{font:600 12.5px/1.35 var(--font-primary);color:var(--text-dark)}
+  .vtip .item .d{font:400 11.5px/1.45 var(--font-primary);color:var(--text-gray-dark);margin-top:2px}
+  .mbody{flex:1;overflow-y:auto;padding:16px 14px 24px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth;min-height:0;background:#fff;position:relative}
+  .mbody > *{flex-shrink:0;position:relative;z-index:1}
+  .mbody::-webkit-scrollbar{display:none}
+  .mbody::before{content:"";position:absolute;top:-9px;left:-14px;right:-14px;height:128px;background:
+      linear-gradient(180deg,rgba(255,255,255,0) 70%,rgba(255,255,255,.55) 86%,#fff 98%),
+      radial-gradient(70% 60% at 18% 14%, rgba(43,66,190,.95), transparent 62%),
+      radial-gradient(60% 55% at 82% 8%, rgba(56,92,248,.85), transparent 60%),
+      radial-gradient(65% 60% at 55% 48%, rgba(150,185,255,.75), transparent 62%),
+      radial-gradient(70% 70% at 88% 80%, rgba(255,255,255,.92), transparent 60%),
+      radial-gradient(75% 70% at 8% 78%, rgba(196,220,255,.9), transparent 62%),
+      linear-gradient(180deg,#2b46b8 0%,#7e9dff 45%,#cfe0ff 72%,#eef3ff 100%);
+    filter:blur(14px) saturate(1.2);z-index:0;pointer-events:none}
+  .mhead{text-shadow:0 1px 8px rgba(8,10,35,.35)}
+  .mhead h1{color:#fff}
+  .mhead p{color:#fff !important}
+  .mhead .kicker{font:700 10px var(--font-primary);letter-spacing:.12em;text-transform:uppercase;color:var(--text-brand)}
+  .mhead h1{font:700 21px var(--font-primary);margin:6px 0 4px;letter-spacing:-.01em}
+  .mhead p{font:400 12.5px/1.45 var(--font-primary);color:var(--text-gray-dark);margin:0}
+  /* tighten boxed rows for narrow width */
+  .mbody .card{position:relative;overflow:visible;background:linear-gradient(90deg,rgba(238,241,251,.95),rgba(238,241,251,.3) 78%,rgba(238,241,251,0));-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;box-shadow:none;border-radius:0}
+  .mbody .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:var(--text-brand);z-index:1}
+  .mbody .frow{gap:10px;min-height:48px;padding:7px 14px}
+  .mbody .sh{display:flex;align-items:center;gap:7px;margin-top:12px;padding:6px 0 2px;font:700 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dark)}
+  .mbody .sh svg{width:14px;height:14px;stroke:var(--text-brand);fill:none;stroke-width:2;flex-shrink:0}
+  .mbody .form{gap:8px !important}
+  .mbody .control{font-size:14px}
+  .mbody .frow label{font:600 12.5px/1.35 var(--font-primary);letter-spacing:0;text-transform:none;color:var(--text-gray-dark)}
+  .mbody .frow label .optional,.mbody .frow label .opt{font-weight:600;color:var(--text-gray-medium)}
+  .mbody .agree-row{align-items:center}
+  .mbody .agree-text{flex:1;min-width:0;text-align:left}
+  .mbody .submit{width:100%;justify-content:center;padding:0 20px;margin-top:18px}
+  .mbody .sig-wrap{margin:14px 14px 0;border:1.5px dashed rgba(56,92,248,.45);background:rgba(56,92,248,.05);cursor:pointer;transition:background .15s,border-color .15s}
+  .mbody .sig-wrap:hover{background:rgba(56,92,248,.08);border-color:rgba(56,92,248,.6)}
+  .mbody .sig-hint b{color:var(--text-brand)}
+  .mbody .sig-clear{margin:10px auto 14px;width:fit-content;height:auto;padding:4px 8px;border:none;background:none;color:rgba(56,92,248,.45);pointer-events:none;text-transform:none;letter-spacing:0;font:700 12.5px var(--font-primary)}
+  .mbody .sig-wrap.signed ~ .sig-clear{color:var(--text-brand);pointer-events:auto;cursor:pointer}
+  .mbody .sig-wrap.signed ~ .sig-clear:hover{text-decoration:underline}
+  .mprog{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--stroke-gray-lighter);border-radius:14px;padding:12px 14px;box-shadow:0 1px 3px rgba(22,22,67,.05)}
+  .mprog .ring{flex:none}
+  .mprog .vela-prog-steps{margin:0;padding:0}
+  .mprog .lt .t{font:700 12.5px var(--font-primary)}
+  .mprog .lt .d{font:400 11px var(--font-primary);color:var(--text-gray-dark);margin-top:1px}
+
+  /* On a real phone viewport, drop the desktop bezel mockup and render the
+     form full-bleed with normal page scroll. Avoids the nested-scroll/dark-
+     chassis artifact a fixed-height bezel produces on narrow screens. */
+  @media (max-width:540px){
+    html,body{background:var(--bg-screen)}
+    .stage{padding:0;gap:0;display:block;min-height:0}
+    .phone-label{display:none}
+    .device{width:100%;max-width:100%;height:auto;min-height:100vh;background:transparent;border-radius:0;padding:0;box-shadow:none}
+    .pscreen{border-radius:0;height:auto;min-height:100vh}
+    .island,.status{display:none}
+    .topbar{position:sticky;top:0}
+    .mbody{overflow:visible;flex:initial}
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="phone-label"><span class="pip">M</span>Guest details · Mobile</div>
+  <div class="device"><div class="pscreen">
+    <div class="island"></div>
+    <div class="status"><span>9:41</span><span class="right">
+      <svg viewBox="0 0 24 24"><path d="M2 17h2v3H2zm4-4h2v7H6zm4-4h2v11h-2zm4-4h2v15h-2zm4-4h2v19h-2z"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M5 13a10 10 0 0 1 14 0M2 9a14 14 0 0 1 20 0"/></svg>
+      <span class="batt"><span class="b"></span></span></span>
+    </div>
+    <header class="topbar">
+      <a class="nav" href="mobile.html"><svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg></a>
+      <div class="titl"><div class="t">Guest registration</div><div class="s" id="topStep">Step 4 of 4</div></div>
+      <div class="brandmark" aria-label="Chekin"><svg viewBox="0 0 24 24" fill="none" stroke="#385CF8" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg></div>
+    </header>
+
+    <div class="mbody">
+      <div class="mhead">
+        <h1>Review your details</h1>
+        <p>By local law, every tourist accommodation must keep a record of its guests.</p>
+      </div>
+
+      <div class="vtip">
+        <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
+        <div class="b">
+          <div class="eye">Good to know</div>
+          <div class="item"><div class="t">We filled in your details</div><div class="d">Your details were imported from the document scan — please check everything is correct.</div></div>
+        </div>
+      </div>
+
+      <form class="form" autocomplete="off" onsubmit="return false" style="display:flex;flex-direction:column;gap:14px">
+
+        <div class="sh">Nationality</div>
+        <section class="card">
+          <div class="frow" data-select data-value="ES">
+            <label>Nationality</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                <div class="opt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                <div class="opt-row" data-v="DE"><span class="opt-flag">🇩🇪</span>Germany</div>
+                <div class="opt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                <div class="opt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="sh">Legal name</div>
+        <section class="card">
+          <div class="frow"><label>First name</label><input class="control" value="Carmen"></div>
+          <div class="frow"><label>Last name</label><input class="control" value="Spanish"></div>
+          <div class="frow"><label>2nd last name <span class="optional">Opt.</span></label><input class="control" value="Spanish"></div>
+        </section>
+
+        <div class="sh">Personal information</div>
+        <section class="card">
+          <div class="frow"><label>Date of birth</label>
+            <div class="date-field"><input class="control" type="date" value="1980-01-01"><svg class="cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+          </div>
+          <div class="frow" data-select data-value="Female">
+            <label>Gender</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val">Female</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="Female">Female</div>
+                <div class="opt-row" data-v="Male">Male</div>
+                <div class="opt-row" data-v="Other">Other</div>
+                <div class="opt-row" data-v="Prefer not to say">Prefer not to say</div>
+              </div>
+            </div>
+          </div>
+          <div class="frow" data-select data-value="ES">
+            <label>Residence country</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>Spain</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="ES"><span class="opt-flag">🇪🇸</span>Spain</div>
+                <div class="opt-row" data-v="FR"><span class="opt-flag">🇫🇷</span>France</div>
+                <div class="opt-row" data-v="PT"><span class="opt-flag">🇵🇹</span>Portugal</div>
+                <div class="opt-row" data-v="GB"><span class="opt-flag">🇬🇧</span>United Kingdom</div>
+              </div>
+            </div>
+          </div>
+          <div class="frow"><label>City</label><input class="control" value="Madrid"></div>
+          <div class="frow"><label>Address</label><input class="control" value="Avda de Madrid s/n"></div>
+          <div class="frow"><label>Postal code</label><input class="control" value="28001"></div>
+        </section>
+
+        <div class="sh">Document</div>
+        <section class="card">
+          <div class="frow" data-select data-value="National ID card">
+            <label>Type</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val">National ID card</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="Passport">Passport</div>
+                <div class="opt-row" data-v="National ID card">National ID card</div>
+                <div class="opt-row" data-v="Driver's license">Driver's license</div>
+              </div>
+            </div>
+          </div>
+          <div class="frow"><label>Number</label><input class="control" value="99999999R"></div>
+        </section>
+
+        <div class="sh">Contact</div>
+        <section class="card">
+          <div class="frow"><label>Email</label><input class="control" type="email" placeholder="you@email.com"></div>
+          <div class="frow">
+            <label>Phone <span class="optional">Opt.</span></label>
+            <div class="phone">
+              <div class="ccode" data-select data-value="+34">
+                <div class="select">
+                  <div class="control" tabindex="0"><span class="val"><span class="opt-flag">🇪🇸</span>+34</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+                  <div class="menu">
+                    <div class="opt-row" data-v="+34"><span class="opt-flag">🇪🇸</span>+34</div>
+                    <div class="opt-row" data-v="+33"><span class="opt-flag">🇫🇷</span>+33</div>
+                    <div class="opt-row" data-v="+44"><span class="opt-flag">🇬🇧</span>+44</div>
+                    <div class="opt-row" data-v="+351"><span class="opt-flag">🇵🇹</span>+351</div>
+                  </div>
+                </div>
+              </div>
+              <input class="control num" placeholder="612 345 678">
+            </div>
+          </div>
+        </section>
+
+        <div class="sh">Your stay</div>
+        <section class="card">
+          <div class="frow" data-select data-value="Holiday">
+            <label>Purpose</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val">Holiday</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="Holiday">Holiday</div>
+                <div class="opt-row" data-v="Business">Business</div>
+                <div class="opt-row" data-v="Visiting family">Visiting family</div>
+                <div class="opt-row" data-v="Other">Other</div>
+              </div>
+            </div>
+          </div>
+          <div class="frow" data-select data-value="">
+            <label>Arrival time</label>
+            <div class="select">
+              <div class="control" tabindex="0"><span class="val placeholder">Select</span><svg class="chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></div>
+              <div class="menu">
+                <div class="opt-row" data-v="14:00">14:00</div>
+                <div class="opt-row" data-v="16:00">16:00</div>
+                <div class="opt-row" data-v="18:00">18:00</div>
+                <div class="opt-row" data-v="20:00">20:00</div>
+                <div class="opt-row" data-v="After 22:00">After 22:00</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div class="sh">Signature</div>
+        <section class="card">
+          <div class="sig-wrap" data-sig>
+            <canvas></canvas>
+            <div class="sig-hint">
+              <svg viewBox="0 0 24 24"><path d="M3 18c3-1 4-9 7-9s2 6 4 6 3-3 7-3"/><path d="m14 20 6-6"/></svg>
+              <b>Draw your signature</b>
+              <span>Use your finger</span>
+            </div>
+          </div>
+          <button type="button" class="sig-clear" data-sig-clear><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg>Clear</button>
+        </section>
+
+        <div class="sh">Agreements</div>
+        <section class="card">
+          <div class="agree-row" data-check>
+            <span class="chk"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span>
+            <span class="agree-text">Send me a copy of the <strong>contract</strong> by email.</span>
+          </div>
+          <div class="agree-row" data-check>
+            <span class="chk"><svg viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></svg></span>
+            <span class="agree-text"><span class="optional">Opt.</span> Receive marketing communications from the host.</span>
+          </div>
+          <p class="legal">By submitting you accept the <a>Contract</a> and our <a>Privacy Policy</a>.</p>
+        </section>
+
+        <button class="submit" type="submit" id="submitBtn">Submit to host</button>
+      </form>
+    </div>
+
+    <!-- success — full-screen takeover -->
+    <div class="done-screen" id="doneScreen" hidden>
+      <div class="ds-main">
+      <h2 class="ds-title">Marta García López is now registered</h2>
+      <p class="ds-sub">2 of 2 guests completed</p>
+      <div class="ds-check"><svg viewBox="0 0 24 24"><path class="ow" d="m6 12 4 4 8-9"/><path d="m6 12 4 4 8-9"/></svg></div>
+      <div class="ds-card">
+        <div class="ds-top"><b>Your check-in is on track</b><span class="pct">60%</span></div>
+        <div class="ds-bar"><i></i></div>
+        <p class="ds-next">Next: register the remaining guests</p>
+      </div>
+      <div class="ds-dsplit">
+        <div class="ph"></div>
+        <div class="tx">
+          <span class="kik">Early check-in</span>
+          <h3>Arrive before 15:00?</h3>
+          <a class="btn">Add · from €25</a>
+        </div>
+      </div>
+      </div>
+      <div class="ds-actions">
+        <a class="ds-btn ghost" href="mobile.html">Back to home</a>
+        <button type="button" class="ds-btn primary" id="doneNext">Register next guest</button>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<script>
+function clearOpenSel(){
+  document.querySelectorAll('.select.open').forEach(function(s){ s.classList.remove('open'); });
+  document.querySelectorAll('.open-sel').forEach(function(s){ s.classList.remove('open-sel'); });
+}
+document.querySelectorAll('[data-select]').forEach(function(wrap){
+  var sel = wrap.querySelector('.select');
+  var control = sel.querySelector('.control');
+  var valEl = sel.querySelector('.val');
+  var host = wrap.closest('.card');
+  control.addEventListener('click', function(e){
+    e.stopPropagation();
+    var willOpen = !sel.classList.contains('open');
+    clearOpenSel();
+    if(willOpen){ sel.classList.add('open'); wrap.classList.add('open-sel'); if(host) host.classList.add('open-sel'); }
+  });
+  sel.querySelectorAll('.opt-row').forEach(function(row){
+    row.addEventListener('click', function(){
+      valEl.innerHTML = row.innerHTML; valEl.classList.remove('placeholder');
+      wrap.setAttribute('data-value', row.getAttribute('data-v')); clearOpenSel();
+    });
+  });
+});
+document.addEventListener('click', clearOpenSel);
+document.querySelectorAll('[data-check]').forEach(function(row){ row.addEventListener('click', function(){ row.classList.toggle('on'); }); });
+document.querySelectorAll('[data-sig]').forEach(function(wrap){
+  var canvas = wrap.querySelector('canvas'); var hint = wrap.querySelector('.sig-hint'); var ctx = canvas.getContext('2d');
+  var drawing=false, dirty=false;
+  function resize(){ var r=wrap.getBoundingClientRect(); if(!r.width) return; var dpr=window.devicePixelRatio||1; canvas.width=r.width*dpr; canvas.height=r.height*dpr; ctx.scale(dpr,dpr); ctx.lineWidth=2.4; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.strokeStyle='#161643'; }
+  function pos(e){ var r=canvas.getBoundingClientRect(); var p=e.touches?e.touches[0]:e; return {x:p.clientX-r.left,y:p.clientY-r.top}; }
+  function start(e){ e.preventDefault(); drawing=true; var p=pos(e); ctx.beginPath(); ctx.moveTo(p.x,p.y); if(!dirty){ dirty=true; wrap.classList.add('signed'); hint.style.display='none'; } }
+  function move(e){ if(!drawing) return; e.preventDefault(); var p=pos(e); ctx.lineTo(p.x,p.y); ctx.stroke(); }
+  function end(){ drawing=false; }
+  setTimeout(resize,30);
+  canvas.addEventListener('mousedown',start); canvas.addEventListener('mousemove',move); window.addEventListener('mouseup',end);
+  canvas.addEventListener('touchstart',start,{passive:false}); canvas.addEventListener('touchmove',move,{passive:false}); canvas.addEventListener('touchend',end);
+  var clearBtn=wrap.parentElement.querySelector('[data-sig-clear]');
+  if(clearBtn) clearBtn.addEventListener('click', function(){ ctx.clearRect(0,0,canvas.width,canvas.height); dirty=false; wrap.classList.remove('signed'); hint.style.display='flex'; });
+});
+var doneScreen=document.getElementById('doneScreen');
+var submitBtn=document.getElementById('submitBtn');
+if(submitBtn) submitBtn.addEventListener('click', function(e){ e.preventDefault(); var ts=document.getElementById('topStep'); if(ts) ts.textContent='Completed'; if(doneScreen){ doneScreen.hidden=false; doneScreen.scrollTop=0; } });
+var doneNext=document.getElementById('doneNext');
+if(doneNext) doneNext.addEventListener('click', function(){ window.location.href='registration-mobile.html'; });
+</script>
+</body>
+</html>
