@@ -139,7 +139,7 @@
   .mbody .sig-wrap{margin:14px 14px 0;border:1.5px dashed rgba(56,92,248,.45);background:rgba(56,92,248,.05);cursor:pointer;transition:background .15s,border-color .15s}
   .mbody .sig-wrap:hover{background:rgba(56,92,248,.08);border-color:rgba(56,92,248,.6)}
   .mbody .sig-hint b{color:var(--text-brand)}
-  .mbody .sig-clear{margin:10px auto 14px;width:fit-content;height:auto;padding:4px 8px;border:none;background:none;color:rgba(56,92,248,.45);pointer-events:none;text-transform:none;letter-spacing:0;font:700 12.5px var(--font-primary)}
+  .mbody .sig-clear{display:flex;align-items:center;gap:5px;margin:8px 14px 14px auto;width:fit-content;height:auto;padding:4px 8px;border:none;background:none;color:rgba(56,92,248,.45);pointer-events:none;text-transform:none;letter-spacing:0;font:700 12.5px var(--font-primary)}
   .mbody .sig-wrap.signed ~ .sig-clear{color:var(--text-brand);pointer-events:auto;cursor:pointer}
   .mbody .sig-wrap.signed ~ .sig-clear:hover{text-decoration:underline}
   .mprog{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--stroke-gray-lighter);border-radius:14px;padding:12px 14px;box-shadow:0 1px 3px rgba(22,22,67,.05)}
@@ -160,6 +160,10 @@
     .island,.status{display:none}
     .topbar{position:sticky;top:0;z-index:30;background:#fff}
     .mbody{overflow:visible;flex:initial}
+    .mbody .frow{flex-wrap:nowrap}
+    .mbody .control,.mbody .select>.control .val{text-align:right}
+    .mbody .control::placeholder{text-align:right}
+    .done-screen{position:fixed;inset:0;border-radius:0;z-index:200}
   }
 </style>
 </head>
