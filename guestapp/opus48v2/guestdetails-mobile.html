@@ -90,7 +90,7 @@
   .done-screen .ds-dsplit .kik{font:800 9px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-brand)}
   .done-screen .ds-dsplit h3{font:800 16px/1.12 var(--font-primary);letter-spacing:-.02em;margin:6px 0 11px;color:var(--text-dark)}
   .done-screen .ds-dsplit .btn{align-self:flex-start;display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:10px;border:0;background:var(--text-brand);color:#fff;font:800 12.5px var(--font-primary);text-decoration:none;cursor:pointer}
-  .done-screen .ds-actions{margin-top:12px;display:flex;flex-direction:column;gap:10px}
+  .done-screen .ds-actions{position:sticky;bottom:0;z-index:5;background:#fff;margin-top:12px;padding-top:10px;display:flex;flex-direction:column;gap:10px}
   .done-screen .ds-btn{height:48px;border-radius:12px;font:700 14.5px var(--font-primary);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;border:0}
   .done-screen .ds-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2}
   .done-screen .ds-btn.primary{background:var(--text-brand);color:#fff}
@@ -136,6 +136,9 @@
   .mbody .agree-row{align-items:center}
   .mbody .agree-text{flex:1;min-width:0;text-align:left}
   .mbody .submit{width:100%;justify-content:center;padding:0 20px;margin-top:18px}
+  .mbody .cta-dock{position:sticky;bottom:0;z-index:25;background:#fff;margin:auto -14px 0;padding:12px 16px calc(14px + env(safe-area-inset-bottom));box-shadow:0 -8px 18px -8px rgba(22,22,67,.12)}
+  .mbody .cta-dock .submit{margin-top:0}
+  .mbody .form{min-height:100%}
   .mbody .sig-wrap{margin:14px 14px 0;border:1.5px dashed rgba(56,92,248,.45);background:rgba(56,92,248,.05);cursor:pointer;transition:background .15s,border-color .15s}
   .mbody .sig-wrap:hover{background:rgba(56,92,248,.08);border-color:rgba(56,92,248,.6)}
   .mbody .sig-hint b{color:var(--text-brand)}
@@ -351,7 +354,7 @@
           <p class="legal">By submitting you accept the <a>Contract</a> and our <a>Privacy Policy</a>.</p>
         </section>
 
-        <button class="submit" type="submit" id="submitBtn">Submit to host</button>
+        <div class="cta-dock"><button class="submit" type="submit" id="submitBtn">Submit to host</button></div>
       </form>
     </div>
 
