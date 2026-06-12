@@ -47,7 +47,7 @@
   .pscreen .modal-btn{height:46px;font-size:14px}
   @keyframes sheetUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
   /* full-screen success takeover */
-  .done-screen{position:relative;flex:1;min-height:0;background:#fff;border-radius:0 0 42px 42px;display:flex;flex-direction:column;padding:20px 18px 0;overflow-y:auto;animation:dsIn .3s ease both}
+  .done-screen{position:relative;flex:1;min-height:0;background:#fff;border-radius:0 0 42px 42px;display:flex;flex-direction:column;padding:20px 18px 0;overflow:hidden;animation:dsIn .3s ease both}
   .done-screen[hidden]{display:none}
   .done-screen::before{content:"";position:absolute;top:0;left:0;right:0;height:160px;background:
       linear-gradient(180deg,rgba(255,255,255,0) 60%,rgba(255,255,255,.5) 80%,#fff 96%),
@@ -59,7 +59,7 @@
       linear-gradient(180deg,#17956b 0%,#5fd0a6 45%,#c7f0e0 72%,#eefcf7 100%);
     filter:blur(14px) saturate(1.2);z-index:0;pointer-events:none}
   .done-screen>*{position:relative;z-index:1}
-  .done-screen .ds-main{flex:1;display:flex;flex-direction:column;justify-content:flex-start}
+  .done-screen .ds-main{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:flex-start}
   @keyframes dsIn{from{opacity:0}to{opacity:1}}
   .done-screen .ds-check{width:118px;height:118px;border-radius:50%;margin:24px auto 0;display:grid;place-items:center;border:2.5px solid #57bf9c;background:transparent;position:relative;box-shadow:0 0 13px 4px rgba(255,255,255,.9),inset 0 0 11px 2px rgba(255,255,255,.85)}
   .done-screen .ds-check::before{content:"";position:absolute;inset:6px;border-radius:50%;background:#f3faf7}
@@ -90,7 +90,7 @@
   .done-screen .ds-dsplit .kik{font:800 9px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-brand)}
   .done-screen .ds-dsplit h3{font:800 16px/1.12 var(--font-primary);letter-spacing:-.02em;margin:6px 0 11px;color:var(--text-dark)}
   .done-screen .ds-dsplit .btn{align-self:flex-start;display:inline-flex;align-items:center;height:36px;padding:0 16px;border-radius:10px;border:0;background:var(--text-brand);color:#fff;font:800 12.5px var(--font-primary);text-decoration:none;cursor:pointer}
-  .done-screen .ds-actions{position:sticky;bottom:0;z-index:5;background:#fff;margin:14px -18px 0;padding:14px 18px calc(4px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;box-shadow:0 -8px 18px -8px rgba(22,22,67,.12)}
+  .done-screen .ds-actions{flex-shrink:0;z-index:5;background:#fff;margin:0 -18px;padding:14px 22px calc(26px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:10px;box-shadow:0 -8px 18px -8px rgba(22,22,67,.12)}
   .done-screen .ds-btn{height:48px;border-radius:12px;font:700 14.5px var(--font-primary);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none;border:0}
   .done-screen .ds-btn svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2.2}
   .done-screen .ds-btn.primary{background:var(--text-brand);color:#fff}
@@ -136,9 +136,8 @@
   .mbody .agree-row{align-items:center}
   .mbody .agree-text{flex:1;min-width:0;text-align:left}
   .mbody .submit{width:100%;justify-content:center;padding:0 20px;margin-top:18px}
-  .mbody .cta-dock{position:sticky;bottom:0;z-index:25;background:#fff;margin:auto -14px 0;padding:24px 16px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -8px 18px -8px rgba(22,22,67,.12)}
-  .mbody .cta-dock .submit{margin-top:0}
-  .mbody .form{min-height:100%}
+  .cta-dock{flex-shrink:0;z-index:25;background:#fff;padding:14px 22px calc(26px + env(safe-area-inset-bottom));box-shadow:0 -8px 18px -8px rgba(22,22,67,.12)}
+  .cta-dock .submit{margin-top:0}
   .mbody .sig-wrap{margin:14px 14px 0;border:1.5px dashed rgba(56,92,248,.45);background:rgba(56,92,248,.05);cursor:pointer;transition:background .15s,border-color .15s}
   .mbody .sig-wrap:hover{background:rgba(56,92,248,.08);border-color:rgba(56,92,248,.6)}
   .mbody .sig-hint b{color:var(--text-brand)}
@@ -353,9 +352,9 @@
           <p class="legal">By submitting you accept the <a>Contract</a> and our <a>Privacy Policy</a>.</p>
         </section>
 
-        <div class="cta-dock"><button class="submit" type="submit" id="submitBtn">Submit to host</button></div>
       </form>
     </div>
+    <div class="cta-dock" id="formDock"><button class="submit" type="submit" id="submitBtn">Submit to host</button></div>
 
     <!-- success — full-screen takeover -->
     <div class="done-screen" id="doneScreen" hidden>
@@ -427,7 +426,7 @@ document.querySelectorAll('[data-sig]').forEach(function(wrap){
 });
 var doneScreen=document.getElementById('doneScreen');
 var submitBtn=document.getElementById('submitBtn');
-if(submitBtn) submitBtn.addEventListener('click', function(e){ e.preventDefault(); var ts=document.getElementById('topStep'); if(ts) ts.textContent='Completed'; var mb=document.querySelector('.mbody'); if(mb) mb.style.display='none'; if(doneScreen){ doneScreen.hidden=false; doneScreen.scrollTop=0; } });
+if(submitBtn) submitBtn.addEventListener('click', function(e){ e.preventDefault(); var ts=document.getElementById('topStep'); if(ts) ts.textContent='Completed'; var mb=document.querySelector('.mbody'); if(mb) mb.style.display='none'; var fd=document.getElementById('formDock'); if(fd) fd.style.display='none'; if(doneScreen){ doneScreen.hidden=false; doneScreen.scrollTop=0; } });
 var doneNext=document.getElementById('doneNext');
 if(doneNext) doneNext.addEventListener('click', function(){ window.location.href='registration-mobile.html'; });
 </script>
