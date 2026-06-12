@@ -268,11 +268,11 @@
     .stage{padding:0;gap:0;display:block;min-height:0}
     .phone-col{gap:0}
     .phone-label{display:none}
-    .phone{width:100%;max-width:100%;height:auto;min-height:100vh;background:transparent;border-radius:0;padding:0;box-shadow:none;transform:none}
-    .screen{border-radius:0;height:auto;min-height:100vh;overflow:visible}
+    .phone{width:100%;max-width:100%;height:100vh;height:100dvh;background:transparent;border-radius:0;padding:0;box-shadow:none;transform:none}
+    .screen{border-radius:0;height:100%;overflow:hidden}
     .island,.status{display:none}
-    .topbar{position:sticky;top:0;z-index:30;background:#fff}
-    .body{overflow:visible;flex:initial}
+    .topbar{flex-shrink:0;z-index:30;background:#fff}
+    .body{overflow-y:auto;flex:1;min-height:0}
   }
 </style>
 </head>
