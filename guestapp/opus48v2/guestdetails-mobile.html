@@ -425,7 +425,7 @@ document.querySelectorAll('[data-sig]').forEach(function(wrap){
 });
 var doneScreen=document.getElementById('doneScreen');
 var submitBtn=document.getElementById('submitBtn');
-if(submitBtn) submitBtn.addEventListener('click', function(e){ e.preventDefault(); var ts=document.getElementById('topStep'); if(ts) ts.textContent='Completed'; var mb=document.querySelector('.mbody'); if(mb) mb.style.display='none'; var tb=document.querySelector('.topbar'); if(tb) tb.style.borderBottom='none'; if(doneScreen){ doneScreen.hidden=false; doneScreen.scrollTop=0; } });
+if(submitBtn) submitBtn.addEventListener('click', function(e){ e.preventDefault(); var ts=document.getElementById('topStep'); if(ts) ts.textContent='Completed'; var mb=document.querySelector('.mbody'); if(mb) mb.style.display='none'; if(doneScreen){ doneScreen.hidden=false; doneScreen.scrollTop=0; } });
 var doneNext=document.getElementById('doneNext');
 if(doneNext) doneNext.addEventListener('click', function(){ window.location.href='registration-mobile.html'; });
 </script>
