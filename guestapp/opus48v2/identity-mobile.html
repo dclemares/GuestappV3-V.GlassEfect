@@ -133,6 +133,7 @@
   .cam-alt a.is-off{pointer-events:none;cursor:default;color:rgba(56,92,248,.45)}
   .demo-ctrl.is-off{pointer-events:none;cursor:default;background:var(--bg-neutral-light);border:1.6px dashed var(--stroke-gray-medium);color:var(--text-gray-medium)}
   .mbody .v-cta{max-width:none}
+  .mbody .card.open-sel{position:relative;z-index:40}
   .mprog{margin-bottom:6px}
   /* keep the checklist rows tidy in the narrow phone width */
   .mbody .steprow{padding:14px 16px;gap:12px}
@@ -153,7 +154,7 @@
     .pscreen{border-radius:0;height:100%;overflow:hidden}
     .island,.status{display:none}
     .topbar{flex-shrink:0;z-index:30;background:#fff}
-    .mbody{overflow-y:auto;flex:1;min-height:0}
+    .mbody{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0}
   }
 </style>
 </head>
