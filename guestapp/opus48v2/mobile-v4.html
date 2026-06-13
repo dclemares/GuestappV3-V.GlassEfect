@@ -283,8 +283,18 @@
   .v4 .task .rail{left:-2px;width:4px;border-radius:0;z-index:1}
   .v4 .task:first-child .rail{border-radius:2px 2px 0 0}
   .v4 .task:last-child .rail{border-radius:0 0 2px 2px}
-  .v4 .task .ic{position:absolute;left:-20px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3;box-shadow:0 2px 7px rgba(22,22,67,.12)}
+  .v4 .task .ic{position:absolute;left:-20px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3}
   .v4 .task .ic svg{width:18px;height:18px}
+  /* cards filled with the accent color, white icon + white text */
+  .v4 .task{background:linear-gradient(90deg,#3a5ef8,#6b86fb) !important}
+  .v4 .task.done{background:linear-gradient(90deg,#0f9f80,#34b89b) !important}
+  .v4 .task .rail{display:none}
+  .v4 .task .ic{background:#fff !important;color:var(--text-brand) !important;box-shadow:0 0 0 1px rgba(22,22,67,.05),0 4px 10px rgba(22,22,67,.18)}
+  .v4 .task.done .ic{color:var(--text-success) !important}
+  .v4 .task .nm{color:#fff !important}
+  .v4 .task .stt{color:rgba(255,255,255,.92) !important}
+  .v4 .task .go{background:rgba(255,255,255,.22) !important;color:#fff !important}
+  .v4 .task::after{background:rgba(255,255,255,.22)}
 
 </style>
 </head>
