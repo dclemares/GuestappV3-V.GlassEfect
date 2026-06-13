@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check-in section — 5 explorations</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<style>
+  :root{
+    --bg-screen:#EEF1FB;--bg-blue-light:#F0F3FF;--bg-neutral-cold:#F0F0F8;
+    --bg-success-light:#E8FCF7;--bg-warn-light:#FFF2E0;
+    --stroke:#E8E9F1;--stroke-med:#CECEDE;
+    --text-dark:#161643;--text-gray:#6B6B95;--text-gray-med:#9696B9;
+    --brand:#385CF8;--brand-d:#2945C5;--success:#0F9F80;--warn:#B86A00;--amber:#EBA13C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg-screen);font-family:var(--font-primary,system-ui);color:var(--text-dark);-webkit-font-smoothing:antialiased;padding:40px 20px 80px}
+  h1.pg{font:800 22px/1 var(--font-primary);text-align:center;margin:0 0 4px;letter-spacing:-.02em}
+  p.pg{font:500 13px var(--font-primary);color:var(--text-gray);text-align:center;margin:0 0 36px}
+  .grid{display:flex;flex-wrap:wrap;gap:40px;justify-content:center;align-items:flex-start;max-width:1300px;margin:0 auto}
+  .col{width:360px}
+  .lab{font:800 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:4px;display:block}
+  .desc{font:500 11.5px/1.4 var(--font-primary);color:var(--text-gray-med);margin-bottom:14px}
+  .frame{background:#fff;border-radius:20px;padding:18px 16px;box-shadow:0 14px 40px -16px rgba(22,22,67,.28)}
+  .eye{font:700 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dark)}
+  svg{display:block}
+
+  /* ============ A · TIMELINE / STEPPER RAIL ============ */
+  .a-list{margin-top:14px;position:relative;padding-left:6px}
+  .a-row{position:relative;display:flex;gap:14px;padding:0 0 20px 26px}
+  .a-row:last-child{padding-bottom:0}
+  .a-row::before{content:"";position:absolute;left:11px;top:24px;bottom:-2px;width:2px;background:var(--stroke)}
+  .a-row:last-child::before{display:none}
+  .a-row.done::before{background:var(--success)}
+  .a-dot{position:absolute;left:0;top:1px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center}
+  .a-row.done .a-dot{background:var(--success);color:#fff}
+  .a-row.active .a-dot{background:var(--brand);color:#fff}
+  .a-row.todo .a-dot{background:var(--bg-neutral-cold);color:var(--text-gray-med)}
+  .a-dot svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2.6}
+  .a-nm{font:700 14px var(--font-primary)}
+  .a-st{font:600 11.5px var(--font-primary);margin-top:1px}
+  .done .a-st{color:var(--success)} .active .a-st{color:var(--brand)} .todo .a-st{color:var(--text-gray-med)}
+
+  /* ============ B · SEGMENTED BAR + CLEAN ROWS ============ */
+  .b-seg{display:flex;gap:5px;margin:14px 0 4px}
+  .b-seg i{flex:1;height:6px;border-radius:99px;background:var(--stroke)}
+  .b-seg i.on{background:linear-gradient(90deg,var(--brand),#6B8CFF)}
+  .b-seg i.ok{background:var(--success)}
+  .b-count{font:700 11px var(--font-primary);color:var(--text-gray);text-align:right;margin-bottom:10px}
+  .b-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-top:1px solid var(--stroke)}
+  .b-ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;flex:none}
+  .b-ic svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.9}
+  .b-nm{flex:1;font:700 13.5px var(--font-primary)}
+  .b-tag{font:700 10px var(--font-primary);text-transform:uppercase;letter-spacing:.04em}
+
+  /* ============ C · FOCUS CARD + COMPLETED CHIP ============ */
+  .c-hero{margin-top:14px;border-radius:16px;padding:16px;background:linear-gradient(135deg,#3F63FF,#6B8CFF);color:#fff;position:relative;overflow:hidden}
+  .c-hero::after{content:"";position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .c-kik{font:800 9.5px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;opacity:.85}
+  .c-hero h3{font:800 19px/1.15 var(--font-primary);margin:6px 0 3px;letter-spacing:-.01em}
+  .c-hero p{font:500 12.5px var(--font-primary);opacity:.92;margin:0 0 14px}
+  .c-btn{display:inline-flex;align-items:center;gap:7px;height:38px;padding:0 18px;border-radius:10px;background:#fff;color:var(--brand);font:700 13px var(--font-primary);border:0}
+  .c-done{display:flex;gap:8px;margin-top:12px}
+  .c-chip{flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:12px;background:var(--bg-success-light)}
+  .c-chip .ck{width:18px;height:18px;border-radius:50%;background:var(--success);color:#fff;display:grid;place-items:center;flex:none}
+  .c-chip .ck svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:3}
+  .c-chip span{font:700 12px var(--font-primary);color:#0c7a62}
+
+  /* ============ D · CHECKLIST CARD ============ */
+  .d-card{margin-top:14px;border:1px solid var(--stroke);border-radius:16px;overflow:hidden}
+  .d-head{display:flex;align-items:center;justify-content:space-between;padding:13px 15px 11px}
+  .d-head .t{font:700 13px var(--font-primary)}
+  .d-head .n{font:700 12px var(--font-primary);color:var(--brand)}
+  .d-bar{height:5px;background:var(--bg-neutral-cold);margin:0 15px}
+  .d-bar i{display:block;height:100%;width:66%;border-radius:99px;background:linear-gradient(90deg,var(--brand),#6B8CFF)}
+  .d-row{display:flex;align-items:center;gap:12px;padding:13px 15px;border-top:1px solid var(--stroke)}
+  .d-row:first-of-type{border-top:1px solid var(--stroke);margin-top:11px}
+  .d-box{width:22px;height:22px;border-radius:7px;flex:none;display:grid;place-items:center}
+  .d-box.ok{background:var(--success);color:#fff}
+  .d-box.no{border:2px solid var(--brand);color:var(--brand)}
+  .d-box svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:3}
+  .d-nm{flex:1;font:600 13.5px var(--font-primary)}
+  .d-nm.done{color:var(--text-gray-med);text-decoration:line-through}
+  .d-go{font:700 12px var(--font-primary);color:var(--brand)}
+
+  /* ============ E · RING + TILES ============ */
+  .e-top{display:flex;align-items:center;gap:16px;margin-top:14px}
+  .e-ring{width:74px;height:74px;flex:none;position:relative;display:grid;place-items:center}
+  .e-ring .pct{font:800 17px var(--font-primary);color:var(--text-dark)}
+  .e-ring .sub{position:absolute;bottom:11px;font:700 7.5px var(--font-primary);letter-spacing:.1em;color:var(--text-gray-med);text-transform:uppercase}
+  .e-cap b{font:700 14px var(--font-primary);display:block}
+  .e-cap span{font:500 12px var(--font-primary);color:var(--text-gray)}
+  .e-tiles{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+  .e-tile{display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:12px;background:var(--bg-neutral-cold)}
+  .e-tile.active{background:var(--bg-blue-light)}
+  .e-tile .ic{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;background:#fff}
+  .e-tile .ic svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2}
+  .e-tile .nm{flex:1;font:700 13px var(--font-primary)}
+  .e-tile .st{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;flex:none}
+  .e-tile .st svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:3}
+</style>
+</head>
+<body>
+  <h1 class="pg">"Complete your check-in" — 5 ideas</h1>
+  <p class="pg">Guest registration (pending) · Security deposit (done) · Balance payment (done)</p>
+
+  <div class="grid">
+
+    <!-- A -->
+    <div class="col">
+      <span class="lab">A · Timeline / stepper</span>
+      <div class="desc">Riel vertical con nodos. El progreso se lee por el recorrido verde→azul→gris.</div>
+      <div class="frame">
+        <span class="eye">Complete your check-in</span>
+        <div class="a-list">
+          <div class="a-row active todo" style="--x:0">
+            <span class="a-dot"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <div><div class="a-nm">Guest registration</div><div class="a-st">Incomplete · 1 pending</div></div>
+          </div>
+          <div class="a-row done">
+            <span class="a-dot"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+            <div><div class="a-nm">Security deposit</div><div class="a-st">Complete</div></div>
+          </div>
+          <div class="a-row done">
+            <span class="a-dot"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+            <div><div class="a-nm">Balance payment</div><div class="a-st">Complete</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- B -->
+    <div class="col">
+      <span class="lab">B · Segmented bar + rows</span>
+      <div class="desc">Barra en 3 segmentos (uno por tarea) y filas limpias sin caja, separadas por líneas.</div>
+      <div class="frame">
+        <span class="eye">Complete your check-in</span>
+        <div class="b-seg"><i class="on"></i><i class="ok"></i><i class="ok"></i></div>
+        <div class="b-count">2 of 3 done</div>
+        <div class="b-row">
+          <span class="b-ic" style="background:var(--bg-blue-light);color:var(--brand)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+          <span class="b-nm">Guest registration</span>
+          <span class="b-tag" style="color:var(--brand)">1 pending</span>
+        </div>
+        <div class="b-row">
+          <span class="b-ic" style="background:var(--bg-success-light);color:var(--success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></span>
+          <span class="b-nm">Security deposit</span>
+          <span class="b-tag" style="color:var(--success)">Done</span>
+        </div>
+        <div class="b-row">
+          <span class="b-ic" style="background:var(--bg-success-light);color:var(--success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></span>
+          <span class="b-nm">Balance payment</span>
+          <span class="b-tag" style="color:var(--success)">Done</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- C -->
+    <div class="col">
+      <span class="lab">C · Focus + completed chips</span>
+      <div class="desc">Solo destaca lo pendiente como tarjeta-acción; lo hecho se colapsa en chips.</div>
+      <div class="frame">
+        <span class="eye">Complete your check-in · 2/3</span>
+        <div class="c-hero">
+          <div class="c-kik">Next up</div>
+          <h3>Guest registration</h3>
+          <p>1 guest still pending — finish before arrival.</p>
+          <button class="c-btn">Continue <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="c-done">
+          <div class="c-chip"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span><span>Security deposit</span></div>
+          <div class="c-chip"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span><span>Balance payment</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- D -->
+    <div class="col">
+      <span class="lab">D · Checklist card</span>
+      <div class="desc">Una sola tarjeta tipo checklist con casillas; lo hecho tachado.</div>
+      <div class="frame">
+        <div class="d-card">
+          <div class="d-head"><span class="t">Complete your check-in</span><span class="n">2/3</span></div>
+          <div class="d-bar"><i></i></div>
+          <div class="d-row">
+            <span class="d-box no"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+            <span class="d-nm">Guest registration</span>
+            <span class="d-go">Resume</span>
+          </div>
+          <div class="d-row">
+            <span class="d-box ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="d-nm done">Security deposit</span>
+          </div>
+          <div class="d-row">
+            <span class="d-box ok"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="d-nm done">Balance payment</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- E -->
+    <div class="col">
+      <span class="lab">E · Progress ring + tiles</span>
+      <div class="desc">Anillo de progreso con resumen y las tareas como tiles compactas.</div>
+      <div class="frame">
+        <span class="eye">Complete your check-in</span>
+        <div class="e-top">
+          <div class="e-ring">
+            <svg width="74" height="74" viewBox="0 0 74 74"><circle cx="37" cy="37" r="32" fill="none" stroke="#E8E9F1" stroke-width="7"/><circle cx="37" cy="37" r="32" fill="none" stroke="url(#g)" stroke-width="7" stroke-linecap="round" stroke-dasharray="201" stroke-dashoffset="67" transform="rotate(-90 37 37)"/><defs><linearGradient id="g"><stop offset="0" stop-color="#385CF8"/><stop offset="1" stop-color="#6B8CFF"/></linearGradient></defs></svg>
+            <span class="pct" style="position:absolute">2/3</span>
+          </div>
+          <div class="e-cap"><b>Almost there</b><span>1 task left before arrival</span></div>
+        </div>
+        <div class="e-tiles">
+          <div class="e-tile active">
+            <span class="ic" style="color:var(--brand)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+            <span class="nm">Guest registration</span>
+            <span class="st" style="background:var(--brand);color:#fff"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span>
+          </div>
+          <div class="e-tile">
+            <span class="ic" style="color:var(--success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></span>
+            <span class="nm">Security deposit</span>
+            <span class="st" style="background:var(--success);color:#fff"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+          </div>
+          <div class="e-tile">
+            <span class="ic" style="color:var(--success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></span>
+            <span class="nm">Balance payment</span>
+            <span class="st" style="background:var(--success);color:#fff"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
