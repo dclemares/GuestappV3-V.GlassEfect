@@ -284,12 +284,13 @@
   .vtip .item .t{font:600 12.5px/1.35 var(--font-primary);color:var(--text-dark)}
   /* v3: joined task cards with top-to-bottom gradient (verify-identity style) */
   /* v3: separate gradient cards, verify-identity step style */
-  .v3sep{display:flex;flex-direction:column;gap:8px}
+  .v3sep{display:flex;flex-direction:column;gap:5px}
   .v3sep .task{position:relative;border-radius:16px;padding:13px 15px;gap:12px;background:linear-gradient(180deg,rgba(238,241,251,.96) 0%,rgba(238,241,251,.5) 58%,rgba(238,241,251,.06) 100%) !important;-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;box-shadow:0 0 16px 6px #fff,0 4px 12px rgba(23,42,96,.07)}
   .v3sep .task .rail{display:none}
   .v3sep .task::after{display:none}
   .v3sep .task .ic{width:40px;height:40px;border-radius:11px}
   .v3sep .task .ic svg{width:18px;height:18px}
+  .v3sep .task.done{background:linear-gradient(180deg,rgba(190,245,225,.6) 0%,rgba(190,245,225,.26) 58%,rgba(190,245,225,.04) 100%) !important}
 
 </style>
 </head>
@@ -333,21 +334,18 @@
         </div>
 
         <div style="margin-top:10px">
-          <div class="vtip">
-            <div class="av"><svg viewBox="0 0 24 24"><path d="M10 2.3l1.75 5.45L17 9.4l-5.25 1.65L10 16.5l-1.75-5.45L3 9.4l5.25-1.65z"/><path d="M18.5 14l.75 2.25 2.25.75-2.25.75-.75 2.25-.75-2.25-2.25-.75 2.25-.75z"/></svg></div>
-            <div class="b">
-              <div class="eye">Complete your check-in</div>
-              <div class="item"><div class="t">2 done, 1 to go — finish your guest registration to be all set.</div></div>
-              <div style="display:flex;align-items:center;gap:10px;margin-top:9px">
-                <div style="flex:1;height:7px;background:transparent;overflow:hidden;border-radius:3px"><i style="display:block;height:100%;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%);width:72%"></i></div>
-                <span style="font:600 12px var(--font-primary);color:var(--text-brand);font-variant-numeric:tabular-nums">2/3</span>
-              </div>
+          <div style="margin-bottom:6px">
+            <span class="sec-eye" style="margin-bottom:0">Complete your check-in</span>
+            <div style="font:400 12.5px/1.4 var(--font-primary);color:var(--text-gray);margin-top:5px">2 done, 1 to go — finish your guest registration to be all set.</div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+              <div style="flex:1;height:7px;background:transparent;overflow:hidden;border-radius:3px"><i style="display:block;height:100%;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%);width:72%"></i></div>
+              <span style="font:600 12px var(--font-primary);color:var(--text-brand);font-variant-numeric:tabular-nums">2/3</span>
             </div>
           </div>
-          <div class="v3sep" style="margin-top:10px">
+          <div class="v3sep" style="margin-top:8px">
             <a class="task" href="registration-mobile.html" style="text-decoration:none;color:inherit"><div class="rail" style="background:var(--text-brand)"></div><div class="ic" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Guest registration</div><span class="stt" style="background:none;padding:0;color:var(--text-brand)">Incomplete · 1 pending</span></div><div class="go" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></div></a>
-            <div class="task"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Security deposit</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
-            <div class="task"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Balance payment</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
+            <div class="task done"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Security deposit</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
+            <div class="task done"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Balance payment</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
           </div>
         </div>
 
