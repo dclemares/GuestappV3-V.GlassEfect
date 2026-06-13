@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check-in section — on-brand explorations</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<style>
+  :root{
+    --bg-screen:#EEF1FB;--bg-blue-light:#F0F3FF;--bg-neutral-cold:#F0F0F8;
+    --bg-success-light:#E8FCF7;--bg-warn-light:#FFF2E0;
+    --stroke:#E8E9F1;--stroke-med:#CECEDE;
+    --text-dark:#161643;--text-gray:#6B6B95;--text-gray-med:#9696B9;
+    --brand:#385CF8;--brand-d:#2945C5;--brand-l:#6B8CFF;--success:#0F9F80;--warn:#B86A00;--amber:#EBA13C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#fff;font-family:var(--font-primary,system-ui);color:var(--text-dark);-webkit-font-smoothing:antialiased;padding:40px 20px 90px}
+  h1.pg{font:800 22px/1 var(--font-primary);text-align:center;margin:0 0 4px;letter-spacing:-.02em}
+  p.pg{font:500 13px var(--font-primary);color:var(--text-gray);text-align:center;margin:0 0 36px}
+  .grid{display:flex;flex-wrap:wrap;gap:44px 40px;justify-content:center;align-items:flex-start;max-width:1320px;margin:0 auto}
+  .col{width:360px}
+  .lab{font:800 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:4px;display:block}
+  .desc{font:500 11.5px/1.4 var(--font-primary);color:var(--text-gray-med);margin-bottom:14px;min-height:32px}
+  .frame{background:#fff;border-radius:18px;padding:18px 16px;box-shadow:0 0 0 1px #EEF1FB, 0 14px 40px -18px rgba(22,22,67,.22)}
+  .eye{font:700 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dark)}
+  svg{display:block}
+
+/* P · Native Refined */
+.w1{background:none;box-shadow:none;padding:0}
+
+.w1 .sh{font:700 10px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:#161643;margin:0 0 11px;display:block}
+
+/* progress row */
+.w1 .prog{display:flex;align-items:center;gap:11px;margin:0 0 14px}
+.w1 .track{flex:1;height:7px;border-radius:3px;background:rgba(22,22,67,.07);overflow:hidden}
+.w1 .track i{display:block;height:100%;width:68%;border-radius:3px;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%)}
+.w1 .cnt{font:700 11px var(--font-primary,system-ui);color:#385CF8;letter-spacing:.01em;flex:none;font-variant-numeric:tabular-nums}
+
+/* joined block */
+.w1 .list{border-radius:14px;overflow:hidden}
+
+/* glass card row */
+.w1 .row{position:relative;display:flex;align-items:center;gap:12px;padding:13px 14px 13px 17px;border-radius:0 14px 14px 0;background:
+  linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 78%,rgba(204,217,255,0)),
+  linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0));
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none}
+.w1 .row.ok{background:
+  linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),
+  linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
+
+/* accent rail — butting together (square middle ends) */
+.w1 .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#385CF8;border-radius:0}
+.w1 .row.ok::before{background:#0F9F80}
+.w1 .row:first-child::before{border-radius:3px 0 0 0}
+.w1 .row:last-child::before{border-radius:0 0 0 3px}
+
+/* hairline divider between rows */
+.w1 .row+.row::after{content:"";position:absolute;left:3px;right:0;top:0;height:1px;background:rgba(22,22,67,.08)}
+
+/* icon chip */
+.w1 .ic{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;background:#F0F3FF;color:#385CF8}
+.w1 .row.ok .ic{background:#E8FCF7;color:#0F9F80}
+.w1 .ic svg{width:14px;height:14px;display:block;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+
+/* text */
+.w1 .body{flex:1;min-width:0}
+.w1 .nm{font:600 13.5px var(--font-primary,system-ui);color:#161643;letter-spacing:-.005em}
+.w1 .stt{font:600 9.5px var(--font-primary,system-ui);margin-top:2px;color:#0F9F80}
+.w1 .row:not(.ok) .stt{color:#385CF8}
+.w1 .amt{font:600 13.5px var(--font-primary,system-ui);color:#161643;flex:none;font-variant-numeric:tabular-nums}
+
+/* chevron — only on actionable row */
+.w1 .go{width:24px;height:24px;border-radius:50%;flex:none;display:grid;place-items:center;background:#F0F3FF;color:#385CF8}
+.w1 .go svg{width:11px;height:11px;display:block;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* Q · Good-to-know LED */
+.w2{background:transparent;box-shadow:none;padding:0;overflow:visible}
+.w2 .sh{font:700 10px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:#161643;margin:0 2px 9px}
+.w2 .vela{display:flex;gap:11px;background:linear-gradient(180deg,rgba(56,92,248,.13),rgba(56,92,248,.05) 80%,rgba(56,92,248,0));-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;border-radius:14px;padding:13px 14px;box-shadow:0 0 16px 2px #fff,0 0 28px 6px #fff}
+.w2 .vela .av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#385CF8,#8CA5FF);color:#fff;display:grid;place-items:center;flex-shrink:0;box-shadow:0 3px 9px rgba(56,92,248,.3)}
+.w2 .vela .av svg{width:15px;height:15px;fill:#fff;stroke:none}
+.w2 .vela .b{flex:1;min-width:0}
+.w2 .vela .eye{font:700 9.5px var(--font-primary,system-ui);color:#385CF8;text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px}
+.w2 .vela .line{font:600 12.5px/1.35 var(--font-primary,system-ui);color:#161643}
+.w2 .vela .line b{color:#0F9F80;font-weight:700}
+.w2 .vela .line i{font-style:normal;color:#385CF8;font-weight:700}
+.w2 .prog{display:flex;align-items:center;gap:9px;margin-top:9px}
+.w2 .prog .track{flex:1;height:7px;border-radius:3px;background:rgba(22,22,67,.07);overflow:hidden}
+.w2 .prog .track i{display:block;height:100%;width:68%;border-radius:3px;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%)}
+.w2 .prog .ct{font:700 10.5px/1 var(--font-primary,system-ui);color:#385CF8;flex:none;letter-spacing:.02em}
+.w2 .list{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+.w2 .task{position:relative;-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;border-radius:0 14px 14px 0;padding:11px 12px;display:flex;align-items:center;gap:11px}
+.w2 .task::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.w2 .task.blue{background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 78%,rgba(204,217,255,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
+.w2 .task.blue::before{background:#385CF8}
+.w2 .task.green{background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
+.w2 .task.green::before{background:#0F9F80}
+.w2 .task .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex-shrink:0}
+.w2 .task .ic svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+.w2 .task.blue .ic{background:#F0F3FF;color:#385CF8}
+.w2 .task.green .ic{background:#E8FCF7;color:#0F9F80}
+.w2 .task .tx{flex:1;min-width:0}
+.w2 .task .nm{font:600 13.5px var(--font-primary,system-ui);color:#161643}
+.w2 .task .stt{display:block;font:600 9.5px var(--font-primary,system-ui);margin-top:2px}
+.w2 .task.blue .stt{color:#385CF8}
+.w2 .task.green .stt{color:#0F9F80}
+.w2 .task .amt{font:700 12px var(--font-primary,system-ui);color:#161643;flex:none}
+.w2 .task .go{width:24px;height:24px;border-radius:50%;background:#F0F3FF;color:#385CF8;display:grid;place-items:center;flex-shrink:0}
+.w2 .task .go svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5}
+
+/* R · Focus Glass */
+.w3{background:#fff;border-radius:20px;padding:18px 16px;overflow:hidden}
+.w3 .sh{font:700 10px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:#161643;margin:0 0 11px}
+
+/* progress header */
+.w3 .ptop{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.w3 .ptop .pl{font:600 11px var(--font-primary,system-ui);color:#6B6B95}
+.w3 .ptop .pc{font:700 12px var(--font-primary,system-ui);color:#385CF8}
+.w3 .track{height:7px;border-radius:3px;background:rgba(22,22,67,.07);overflow:hidden;margin-bottom:18px}
+.w3 .track i{display:block;height:100%;width:68%;border-radius:3px;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%)}
+
+/* prominent pending glass card */
+.w3 .focus{position:relative;border-radius:0 14px 14px 0;padding:16px 16px 16px 17px;border:none;overflow:hidden;
+  background:
+    linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 60%,rgba(204,217,255,0) 92%),
+    linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0));
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2)}
+.w3 .focus::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:#385CF8}
+.w3 .focus .top{display:flex;align-items:center;gap:12px}
+.w3 .chip{flex:none;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;background:#F0F3FF}
+.w3 .chip.b svg{stroke:#385CF8}
+.w3 .chip.g{background:#E8FCF7}
+.w3 .chip.g svg{stroke:#0F9F80}
+.w3 .focus .tt{flex:1;min-width:0}
+.w3 .focus .tt .nm{font:600 14.5px var(--font-primary,system-ui);color:#161643;line-height:1.15}
+.w3 .focus .tt .stt{display:block;margin-top:3px;font:600 9.5px var(--font-primary,system-ui);color:#385CF8}
+.w3 .go{flex:none;width:24px;height:24px;border-radius:50%;background:#F0F3FF;display:flex;align-items:center;justify-content:center}
+.w3 .go svg{stroke:#385CF8}
+.w3 .cta{display:inline-flex;align-items:center;gap:3px;margin:13px 0 0 46px;font:700 12px var(--font-primary,system-ui);color:#385CF8;text-decoration:none}
+.w3 .cta .c{font-size:13px;line-height:1}
+
+/* joined completed block */
+.w3 .done{margin-top:12px;border-radius:14px;overflow:hidden}
+.w3 .done .row{position:relative;display:flex;align-items:center;gap:11px;padding:11px 14px 11px 15px;border-radius:0;border:none;
+  background:
+    linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 60%,rgba(190,245,225,0) 92%),
+    linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0));
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2)}
+.w3 .done .row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#0F9F80}
+.w3 .done .row:first-child{border-radius:0 14px 0 0}
+.w3 .done .row:first-child::before{border-radius:3px 0 0 0}
+.w3 .done .row:last-child{border-radius:0 0 14px 0}
+.w3 .done .row:last-child::before{border-radius:0 0 0 3px}
+.w3 .done .row+.row{border-top:1px solid rgba(22,22,67,.08)}
+.w3 .done .chip{width:30px;height:30px;border-radius:8px}
+.w3 .done .chip svg{width:13px;height:13px}
+.w3 .done .tt{flex:1;min-width:0}
+.w3 .done .nm{font:600 13.5px var(--font-primary,system-ui);color:#161643}
+.w3 .done .stt{display:block;margin-top:2px;font:600 9.5px var(--font-primary,system-ui);color:#0F9F80}
+.w3 .done .amt{font:700 12px var(--font-primary,system-ui);color:#0F9F80;flex:none;align-self:center}
+
+/* S · Glass Stepper */
+.w4{background:transparent;box-shadow:none;padding:0;border-radius:0;font-family:var(--font-primary,system-ui)}
+.w4 *{box-sizing:border-box}
+.w4 .sh{display:block;font:700 10px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:#161643;margin:0 0 9px 2px}
+.w4 .card{position:relative;border-radius:0 14px 14px 0;padding:16px 16px 17px;overflow:hidden;background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 60%,rgba(204,217,255,0) 78%),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0));-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none}
+.w4 .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;background:#385CF8}
+/* progress header */
+.w4 .ph{display:flex;align-items:center;gap:11px;margin-bottom:15px}
+.w4 .ph .pt{flex:1;height:7px;border-radius:3px;background:rgba(22,22,67,.07);overflow:hidden;position:relative}
+.w4 .ph .pt i{display:block;height:100%;width:68%;border-radius:3px;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%)}
+.w4 .ph .pc{font:800 11px var(--font-primary,system-ui);color:#385CF8;flex:none;letter-spacing:.01em}
+/* stepper */
+.w4 .step{position:relative;list-style:none;margin:0;padding:0}
+.w4 .row{position:relative;display:flex;align-items:center;gap:13px;padding:9px 0;padding-left:34px}
+.w4 .node{position:absolute;left:0;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;z-index:2;background:#fff}
+.w4 .row.done .node{background:#0F9F80;color:#fff}
+.w4 .row.done .node svg{width:11px;height:11px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.w4 .row.active .node{background:#fff;box-shadow:0 0 0 2px #385CF8 inset,0 0 0 4px rgba(56,92,248,.16)}
+.w4 .row.active .node b{width:8px;height:8px;border-radius:50%;background:#385CF8;display:block}
+/* connector line */
+.w4 .row::before{content:"";position:absolute;left:10px;top:50%;width:2px;height:calc(50% + 9px);background:rgba(22,22,67,.10);z-index:1}
+.w4 .row:first-child::before{display:none}
+.w4 .row.done::before,.w4 .row.done+.row.done::before{background:#0F9F80}
+.w4 .row.active::before{background:linear-gradient(180deg,#0F9F80,#385CF8)}
+/* icon chip */
+.w4 .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:none}
+.w4 .row.active .ic{background:#F0F3FF;color:#385CF8}
+.w4 .row.done .ic{background:#E8FCF7;color:#0F9F80}
+.w4 .ic svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* body */
+.w4 .bd{flex:1;min-width:0}
+.w4 .nm{font:600 13.5px var(--font-primary,system-ui);color:#161643;line-height:1.15}
+.w4 .stt{display:block;font:600 9.5px var(--font-primary,system-ui);margin-top:3px}
+.w4 .row.active .stt{color:#385CF8}
+.w4 .row.done .stt{color:#0F9F80}
+.w4 .amt{font:700 12px var(--font-primary,system-ui);color:#161643;flex:none;margin-right:2px}
+/* chevron */
+.w4 .go{width:24px;height:24px;border-radius:50%;background:#F0F3FF;display:grid;place-items:center;flex:none}
+.w4 .go svg{width:11px;height:11px;fill:none;stroke:#385CF8;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* T · Segmented Glass Rows */
+.w5{background:transparent;box-shadow:none;padding:0;overflow:visible}
+.w5 .sh{font:700 10px/1 var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:#161643;margin:0 2px 11px}
+
+/* progress block */
+.w5 .prog{display:flex;align-items:center;gap:10px;margin:0 2px 16px}
+.w5 .segs{display:flex;gap:6px;flex:1}
+.w5 .seg{height:7px;flex:1;border-radius:3px;background:rgba(22,22,67,.07);overflow:hidden}
+.w5 .seg.done{background:#0F9F80}
+.w5 .seg.live{background:rgba(22,22,67,.07)}
+.w5 .seg.live::before{content:"";display:block;height:100%;width:100%;border-radius:3px;background:linear-gradient(90deg,#385CF8 0%,#6B8CFF 72%,rgba(107,140,255,0) 100%)}
+.w5 .cnt{font:700 11px/1 var(--font-primary,system-ui);color:#385CF8;flex:none;letter-spacing:.01em}
+
+/* card list */
+.w5 .list{display:flex;flex-direction:column;gap:9px}
+.w5 .card{position:relative;display:flex;align-items:center;gap:12px;padding:12px 13px;border-radius:0 14px 14px 0;border:none;
+  background:linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0));
+  -webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2)}
+.w5 .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px}
+.w5 .card::after{content:"";position:absolute;inset:0;border-radius:0 14px 14px 0;pointer-events:none;z-index:0}
+.w5 .card.blue::before{background:#385CF8}
+.w5 .card.green::before{background:#0F9F80}
+.w5 .card.blue::after{background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 60%,rgba(204,217,255,0))}
+.w5 .card.green::after{background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 60%,rgba(190,245,225,0))}
+
+.w5 .chip{position:relative;z-index:1;width:34px;height:34px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center}
+.w5 .card.blue .chip{background:#F0F3FF}
+.w5 .card.green .chip{background:#E8FCF7}
+.w5 .chip svg{width:14px;height:14px;display:block}
+
+.w5 .tx{position:relative;z-index:1;flex:1;min-width:0}
+.w5 .tx .nm{font:600 13.5px/1.2 var(--font-primary,system-ui);color:#161643}
+.w5 .tx .stt{display:block;margin-top:3px;font:600 9.5px/1 var(--font-primary,system-ui);letter-spacing:.01em}
+.w5 .card.blue .stt{color:#385CF8}
+.w5 .card.green .stt{color:#0F9F80}
+
+.w5 .end{position:relative;z-index:1;flex:none;display:flex;align-items:center;gap:11px}
+.w5 .amt{font:600 9.5px/1 var(--font-primary,system-ui);color:#0F9F80;letter-spacing:.01em}
+.w5 .go{width:24px;height:24px;border-radius:50%;background:#F0F3FF;display:flex;align-items:center;justify-content:center;flex:none}
+.w5 .go svg{width:11px;height:11px;display:block}
+</style>
+</head>
+<body>
+  <h1 class="pg">"Complete your check-in" — on-brand ideas</h1>
+  <p class="pg">Mismo lenguaje glass del app · Guest registration (pending) · Security deposit (done) · Balance payment (done)</p>
+  <div class="grid">
+
+    <div class="col">
+      <span class="lab">P · Native Refined</span>
+      <div class="desc">La lista de tareas de cristal, unida y pulida al milímetro.</div>
+      <div class="frame w1"><span class="sh">Complete your check-in</span>
+<div class="prog">
+  <span class="track"><i></i></span>
+  <span class="cnt">2/3</span>
+</div>
+<div class="list">
+  <div class="row">
+    <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+    <span class="body">
+      <span class="nm">Guest registration</span>
+      <span class="stt">Incomplete · 1 pending</span>
+    </span>
+    <span class="go"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span>
+  </div>
+  <div class="row ok">
+    <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></span>
+    <span class="body">
+      <span class="nm">Security deposit</span>
+      <span class="stt">Complete</span>
+    </span>
+  </div>
+  <div class="row ok">
+    <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></span>
+    <span class="body">
+      <span class="nm">Balance payment</span>
+      <span class="stt">Complete</span>
+    </span>
+    <span class="amt">€340</span>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">Q · Good-to-know LED</span>
+      <div class="desc">Vela te lo resume: 2 hechas, falta 1 para terminar tu check-in.</div>
+      <div class="frame w2"><div class="sh">Complete your check-in</div>
+<div class="vela">
+  <div class="av"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 6.2L20.5 9l-5 4.1L17 20l-5-3.4L7 20l1.5-6.9-5-4.1 6.3-.8z"/></svg></div>
+  <div class="b">
+    <div class="eye">Good to know</div>
+    <div class="line"><b>2 done</b>, <i>1 to go</i> — finish your guest registration to be all set.</div>
+    <div class="prog"><div class="track"><i></i></div><span class="ct">2/3</span></div>
+  </div>
+</div>
+<div class="list">
+  <div class="task blue">
+    <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+    <div class="tx"><div class="nm">Guest registration</div><span class="stt">Incomplete · 1 pending</span></div>
+    <div class="go"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></div>
+  </div>
+  <div class="task green">
+    <div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div>
+    <div class="tx"><div class="nm">Security deposit</div><span class="stt">Complete</span></div>
+  </div>
+  <div class="task green">
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div>
+    <div class="tx"><div class="nm">Balance payment</div><span class="stt">Complete</span></div>
+    <span class="amt">€340</span>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">R · Focus Glass</span>
+      <div class="desc">Una sola tarea pendiente, en primer plano y lista para continuar.</div>
+      <div class="frame w3"><p class="sh">Complete your check-in</p>
+<div class="ptop"><span class="pl">2 of 3 done</span><span class="pc">2/3</span></div>
+<div class="track"><i></i></div>
+
+<div class="focus">
+  <div class="top">
+    <span class="chip b"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span>
+    <span class="tt"><span class="nm">Guest registration</span><span class="stt">Incomplete · 1 pending</span></span>
+    <span class="go"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg></span>
+  </div>
+  <a class="cta" href="#">Continue<span class="c">›</span></a>
+</div>
+
+<div class="done">
+  <div class="row">
+    <span class="chip g"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 8-7 10-4-2-7-5.6-7-10V6z"/></svg></span>
+    <span class="tt"><span class="nm">Security deposit</span><span class="stt">Complete</span></span>
+  </div>
+  <div class="row">
+    <span class="chip g"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/></svg></span>
+    <span class="tt"><span class="nm">Balance payment</span><span class="stt">Complete</span></span>
+    <span class="amt">€340</span>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">S · Glass Stepper</span>
+      <div class="desc">Un solo paso a paso de cristal: nodos verdes para lo hecho y azul para lo pendiente.</div>
+      <div class="frame w4"><span class="sh">Complete your check-in</span>
+<div class="card">
+  <div class="ph">
+    <span class="pt"><i></i></span>
+    <span class="pc">2/3</span>
+  </div>
+  <ul class="step">
+    <li class="row active">
+      <span class="node"><b></b></span>
+      <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+      <span class="bd"><span class="nm">Guest registration</span><span class="stt">Incomplete · 1 pending</span></span>
+      <span class="go"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></span>
+    </li>
+    <li class="row done">
+      <span class="node"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></span>
+      <span class="bd"><span class="nm">Security deposit</span><span class="stt">Complete</span></span>
+    </li>
+    <li class="row done">
+      <span class="node"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+      <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></span>
+      <span class="bd"><span class="nm">Balance payment</span><span class="stt">Complete</span></span>
+      <span class="amt">€340</span>
+    </li>
+  </ul>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">T · Segmented Glass Rows</span>
+      <div class="desc">Tu progreso en tres segmentos, con cada tarea en su tarjeta de cristal.</div>
+      <div class="frame w5"><p class="sh">Complete your check-in</p>
+
+<div class="prog">
+  <div class="segs">
+    <span class="seg done"></span>
+    <span class="seg done"></span>
+    <span class="seg live"></span>
+  </div>
+  <span class="cnt">2/3</span>
+</div>
+
+<div class="list">
+  <div class="card blue">
+    <span class="chip"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="#385CF8" stroke-width="1.8"/><path d="M5 19.5c0-3.6 3.1-5.5 7-5.5s7 1.9 7 5.5" stroke="#385CF8" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+    <div class="tx">
+      <div class="nm">Guest registration</div>
+      <span class="stt">Incomplete · 1 pending</span>
+    </div>
+    <div class="end">
+      <span class="go"><svg viewBox="0 0 24 24" fill="none"><path d="m9 6 6 6-6 6" stroke="#385CF8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </div>
+  </div>
+
+  <div class="card green">
+    <span class="chip"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z" stroke="#0F9F80" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#0F9F80" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    <div class="tx">
+      <div class="nm">Security deposit</div>
+      <span class="stt">Complete</span>
+    </div>
+  </div>
+
+  <div class="card green">
+    <span class="chip"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="#0F9F80" stroke-width="1.8"/><path d="M3 9.5h18" stroke="#0F9F80" stroke-width="1.8"/><path d="M6.5 14.5h4" stroke="#0F9F80" stroke-width="1.8" stroke-linecap="round"/></svg></span>
+    <div class="tx">
+      <div class="nm">Balance payment</div>
+      <span class="stt">Complete</span>
+    </div>
+    <div class="end">
+      <span class="amt">€340</span>
+    </div>
+  </div>
+</div></div>
+    </div>
+
+  </div>
+</body>
+</html>
