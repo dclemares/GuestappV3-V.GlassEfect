@@ -283,9 +283,13 @@
   .vtip .eye{font:700 9.5px var(--font-primary);color:var(--text-brand);text-transform:uppercase;letter-spacing:.1em;margin-bottom:8px}
   .vtip .item .t{font:600 12.5px/1.35 var(--font-primary);color:var(--text-dark)}
   /* v3: joined task cards with top-to-bottom gradient (verify-identity style) */
-  .v3list{position:relative;background:linear-gradient(180deg,rgba(238,241,251,.96) 0%,rgba(238,241,251,.55) 58%,rgba(238,241,251,.12) 100%);-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border-radius:14px;overflow:hidden}
-  .v3list .task{background:transparent !important;border-radius:0}
-  .v3list .task .rail{border-radius:0}
+  /* v3: separate gradient cards, verify-identity step style */
+  .v3sep{display:flex;flex-direction:column;gap:8px}
+  .v3sep .task{position:relative;border-radius:16px;padding:13px 15px;gap:12px;background:linear-gradient(180deg,rgba(238,241,251,.96) 0%,rgba(238,241,251,.5) 58%,rgba(238,241,251,.06) 100%) !important;-webkit-backdrop-filter:blur(12px) saturate(1.2);backdrop-filter:blur(12px) saturate(1.2);border:none;box-shadow:0 0 16px 6px #fff,0 4px 12px rgba(23,42,96,.07)}
+  .v3sep .task .rail{display:none}
+  .v3sep .task::after{display:none}
+  .v3sep .task .ic{width:40px;height:40px;border-radius:11px}
+  .v3sep .task .ic svg{width:18px;height:18px}
 
 </style>
 </head>
@@ -340,7 +344,7 @@
               </div>
             </div>
           </div>
-          <div class="tasklist v3list" style="margin-top:10px">
+          <div class="v3sep" style="margin-top:10px">
             <a class="task" href="registration-mobile.html" style="text-decoration:none;color:inherit"><div class="rail" style="background:var(--text-brand)"></div><div class="ic" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Guest registration</div><span class="stt" style="background:none;padding:0;color:var(--text-brand)">Incomplete · 1 pending</span></div><div class="go" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></div></a>
             <div class="task"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Security deposit</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
             <div class="task"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Balance payment</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
