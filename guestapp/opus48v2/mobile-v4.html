@@ -275,19 +275,15 @@
     .body{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;padding-bottom:calc(32px + env(safe-area-inset-bottom))}
   }
 
-  /* v4: icon tiles pulled to the left margin, accent rail crosses their center, icon on top */
-  .v4{overflow:visible !important;border-radius:0 !important;background:none !important}
-  /* card panel inset to the right: icon sits in a clean gutter, no card behind it */
-  .v4 .task{background:none !important;position:relative;isolation:isolate;border-radius:0;padding:11px 12px 11px 44px}
-  .v4 .task::before{content:"";position:absolute;left:32px;top:0;right:0;bottom:0;z-index:-1;background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 78%,rgba(204,217,255,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
-  .v4 .task.done::before{background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
-  .v4 .task:first-child::before{border-radius:12px 12px 0 0}
-  .v4 .task:last-child::before{border-radius:0 0 12px 12px}
-  .v4 .task::after{left:32px}
-  .v4 .task .rail{left:10px;width:4px;border-radius:0;z-index:1}
+  /* v4: keep the box + accent exactly as the real flow; icon pulled half-out to the left, accent centered on the icon's center */
+  .v4{overflow:visible !important;margin-left:20px}
+  .v4 .task{border-radius:0;padding-left:32px}
+  .v4 .task:first-child{border-radius:0 12px 0 0}
+  .v4 .task:last-child{border-radius:0 0 12px 0}
+  .v4 .task .rail{left:-2px;width:4px;border-radius:0;z-index:1}
   .v4 .task:first-child .rail{border-radius:2px 2px 0 0}
   .v4 .task:last-child .rail{border-radius:0 0 2px 2px}
-  .v4 .task .ic{position:absolute;left:-8px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3;box-shadow:0 2px 7px rgba(22,22,67,.12)}
+  .v4 .task .ic{position:absolute;left:-20px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3;box-shadow:0 2px 7px rgba(22,22,67,.12)}
   .v4 .task .ic svg{width:18px;height:18px}
 
 </style>
