@@ -276,14 +276,18 @@
   }
 
   /* v4: icon tiles pulled to the left margin, accent rail crosses their center, icon on top */
-  .v4{overflow:visible !important;border-radius:0 !important}
-  .v4 .task{padding-left:42px;border-radius:0}
-  .v4 .task:first-child{border-radius:0 12px 0 0}
-  .v4 .task:last-child{border-radius:0 0 12px 0}
-  .v4 .task .rail{left:8px;width:4px;border-radius:0;z-index:1}
+  .v4{overflow:visible !important;border-radius:0 !important;background:none !important}
+  /* card panel inset to the right: icon sits in a clean gutter, no card behind it */
+  .v4 .task{background:none !important;position:relative;isolation:isolate;border-radius:0;padding:11px 12px 11px 44px}
+  .v4 .task::before{content:"";position:absolute;left:32px;top:0;right:0;bottom:0;z-index:-1;background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 78%,rgba(204,217,255,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
+  .v4 .task.done::before{background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))}
+  .v4 .task:first-child::before{border-radius:12px 12px 0 0}
+  .v4 .task:last-child::before{border-radius:0 0 12px 12px}
+  .v4 .task::after{left:32px}
+  .v4 .task .rail{left:10px;width:4px;border-radius:0;z-index:1}
   .v4 .task:first-child .rail{border-radius:2px 2px 0 0}
   .v4 .task:last-child .rail{border-radius:0 0 2px 2px}
-  .v4 .task .ic{position:absolute;left:-10px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3;box-shadow:0 2px 7px rgba(22,22,67,.12)}
+  .v4 .task .ic{position:absolute;left:-8px;top:50%;transform:translateY(-50%);margin:0;width:40px;height:40px;border-radius:11px;z-index:3;box-shadow:0 2px 7px rgba(22,22,67,.12)}
   .v4 .task .ic svg{width:18px;height:18px}
 
 </style>
@@ -337,8 +341,8 @@
           </div>
           <div class="tasklist v4">
             <a class="task" href="registration-mobile.html" style="text-decoration:none;color:inherit;background:linear-gradient(90deg,rgba(204,217,255,.5),rgba(204,217,255,.16) 78%,rgba(204,217,255,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))"><div class="rail" style="background:var(--text-brand)"></div><div class="ic" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Guest registration</div><span class="stt" style="background:none;padding:0;color:var(--text-brand)">Incomplete · 1 pending</span></div><div class="go" style="background:var(--bg-blue-light);color:var(--text-brand)"><svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></svg></div></a>
-            <div class="task" style="background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Security deposit</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
-            <div class="task" style="background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Balance payment</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
+            <div class="task done" style="background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Security deposit</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
+            <div class="task done" style="background:linear-gradient(90deg,rgba(190,245,225,.5),rgba(190,245,225,.16) 78%,rgba(190,245,225,0)),linear-gradient(90deg,rgba(240,240,248,.95),rgba(240,240,248,.32) 78%,rgba(240,240,248,0))"><div class="rail" style="background:var(--text-success)"></div><div class="ic" style="background:var(--bg-success-light);color:var(--text-success)"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></div><div style="flex:1;min-width:0"><div class="nm">Balance payment</div><span class="stt" style="background:none;padding:0;color:var(--text-success)">Complete</span></div></div>
           </div>
         </div>
 
