@@ -1,0 +1,967 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Check-in section — 10 more explorations</title>
+<link rel="stylesheet" href="../../ds/colors_and_type.css">
+<style>
+  :root{
+    --bg-screen:#EEF1FB;--bg-blue-light:#F0F3FF;--bg-neutral-cold:#F0F0F8;
+    --bg-success-light:#E8FCF7;--bg-warn-light:#FFF2E0;
+    --stroke:#E8E9F1;--stroke-med:#CECEDE;
+    --text-dark:#161643;--text-gray:#6B6B95;--text-gray-med:#9696B9;
+    --brand:#385CF8;--brand-d:#2945C5;--brand-l:#6B8CFF;--success:#0F9F80;--warn:#B86A00;--amber:#EBA13C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg-screen);font-family:var(--font-primary,system-ui);color:var(--text-dark);-webkit-font-smoothing:antialiased;padding:40px 20px 90px}
+  h1.pg{font:800 22px/1 var(--font-primary);text-align:center;margin:0 0 4px;letter-spacing:-.02em}
+  p.pg{font:500 13px var(--font-primary);color:var(--text-gray);text-align:center;margin:0 0 36px}
+  .grid{display:flex;flex-wrap:wrap;gap:44px 40px;justify-content:center;align-items:flex-start;max-width:1320px;margin:0 auto}
+  .col{width:360px}
+  .lab{font:800 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--brand);margin-bottom:4px;display:block}
+  .desc{font:500 11.5px/1.4 var(--font-primary);color:var(--text-gray-med);margin-bottom:14px;min-height:32px}
+  .frame{background:#fff;border-radius:20px;padding:18px 16px;box-shadow:0 14px 40px -16px rgba(22,22,67,.28);overflow:hidden}
+  .eye{font:700 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-dark)}
+  svg{display:block}
+
+/* F · Boarding Pass */
+.v1{background:transparent;box-shadow:none;padding:0;border-radius:0}
+.v1 .tkt{position:relative;border-radius:20px;background:#fff;box-shadow:0 18px 44px -18px rgba(22,22,67,.32);overflow:hidden}
+.v1 .strip{position:relative;display:flex;align-items:center;justify-content:space-between;padding:15px 18px 17px;background:linear-gradient(118deg,#2945C5,#385CF8 58%,#6B8CFF);color:#fff;overflow:hidden}
+.v1 .strip::after{content:"";position:absolute;right:-34px;top:-44px;width:130px;height:130px;border-radius:50%;background:rgba(255,255,255,.10)}
+.v1 .strip::before{content:"";position:absolute;left:-30px;bottom:-50px;width:110px;height:110px;border-radius:50%;background:rgba(255,255,255,.07)}
+.v1 .brand{display:flex;align-items:center;gap:9px;position:relative;z-index:1}
+.v1 .plane{width:26px;height:26px;border-radius:8px;background:rgba(255,255,255,.18);display:grid;place-items:center;flex:none}
+.v1 .plane svg{width:15px;height:15px;fill:#fff}
+.v1 .brand .eyb{font:800 9px/1 var(--font-primary,system-ui);letter-spacing:.16em;text-transform:uppercase;opacity:.82}
+.v1 .brand .ttl{font:800 14px/1.05 var(--font-primary,system-ui);letter-spacing:-.01em;margin-top:3px}
+.v1 .board{position:relative;z-index:1;text-align:right}
+.v1 .board b{font:800 17px/1 var(--font-primary,system-ui)}
+.v1 .board b i{font-style:normal;opacity:.62;font-size:13px}
+.v1 .board span{display:block;font:800 8px/1 var(--font-primary,system-ui);letter-spacing:.16em;text-transform:uppercase;opacity:.8;margin-top:4px}
+.v1 .perf{position:relative;height:20px;background:#fff}
+.v1 .perf::before,.v1 .perf::after{content:"";position:absolute;top:50%;transform:translateY(-50%);width:22px;height:22px;border-radius:50%;background:var(--bg-screen,#EEF1FB)}
+.v1 .perf::before{left:-11px}
+.v1 .perf::after{right:-11px}
+.v1 .dash{position:absolute;left:16px;right:16px;top:50%;transform:translateY(-50%);border-top:2px dashed var(--stroke,#E8E9F1)}
+.v1 .fields{padding:2px 16px 4px}
+.v1 .row{display:flex;align-items:center;gap:13px;padding:13px 2px}
+.v1 .row+.row{border-top:1px solid var(--stroke,#E8E9F1)}
+.v1 .ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center}
+.v1 .ic svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.v1 .row.go .ic{background:var(--brand,#385CF8);color:#fff;box-shadow:0 8px 18px -7px rgba(56,92,248,.7)}
+.v1 .row.ok .ic{background:var(--success-light,#E8FCF7);color:var(--success,#0F9F80)}
+.v1 .fld{flex:1;min-width:0}
+.v1 .fld .k{font:800 8.5px/1 var(--font-primary,system-ui);letter-spacing:.15em;text-transform:uppercase;color:var(--text-gray-med,#9696B9)}
+.v1 .fld .v{font:700 15px/1.1 var(--font-primary,system-ui);color:var(--text-dark,#161643);margin-top:5px}
+.v1 .end{flex:none;display:flex;align-items:center;gap:7px}
+.v1 .amt{font:800 15px/1 var(--font-primary,system-ui);color:var(--text-dark,#161643)}
+.v1 .seat{font:800 10px/1 var(--font-primary,system-ui);letter-spacing:.04em;text-transform:uppercase;padding:6px 10px;border-radius:8px}
+.v1 .row.go .seat{background:var(--brand,#385CF8);color:#fff}
+.v1 .row.ok .stamp{width:24px;height:24px;border-radius:50%;background:var(--success,#0F9F80);color:#fff;display:grid;place-items:center}
+.v1 .row.ok .stamp svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.v1 .stub{position:relative;border-top:2px dashed var(--stroke,#E8E9F1);background:var(--bg-neutral-cold,#F0F0F8);padding:13px 18px 15px;display:flex;align-items:center;justify-content:space-between;gap:14px}
+.v1 .stub::before,.v1 .stub::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--bg-screen,#EEF1FB)}
+.v1 .stub::before{left:-11px}
+.v1 .stub::after{right:-11px}
+.v1 .bars{display:flex;align-items:flex-end;gap:2px;height:34px}
+.v1 .bars i{width:2px;height:100%;background:var(--text-dark,#161643);border-radius:1px}
+.v1 .bars i:nth-child(3n){width:4px}
+.v1 .bars i:nth-child(2n){opacity:.45;height:78%}
+.v1 .bars i:nth-child(5n){height:60%}
+.v1 .bars i:nth-child(7n){width:3px;opacity:1}
+.v1 .ref{text-align:right}
+.v1 .ref .k{font:800 8px/1 var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--text-gray-med,#9696B9)}
+.v1 .ref .c{font:800 13px/1 var(--font-primary,system-ui);color:var(--text-dark,#161643);margin-top:5px;letter-spacing:.06em}
+
+/* G · Quest Log */
+.v2{
+  background:linear-gradient(160deg,#161643 0%,#2945C5 120%);
+  padding:22px 18px 20px;
+  border-radius:24px;
+  font-family:var(--font-primary,system-ui);
+  color:#fff;
+  position:relative;
+  overflow:hidden;
+}
+.v2 *{box-sizing:border-box;}
+.v2 .v2-glow{
+  position:absolute;top:-60px;right:-50px;width:180px;height:180px;
+  background:radial-gradient(circle,rgba(107,140,255,.55),transparent 70%);
+  pointer-events:none;
+}
+.v2 .v2-head{
+  display:flex;align-items:center;gap:9px;position:relative;z-index:1;
+}
+.v2 .v2-eye{
+  font-size:10px;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+  color:#6B8CFF;
+}
+.v2 .v2-title{
+  margin:3px 0 0;font-size:19px;font-weight:800;letter-spacing:-.3px;line-height:1.1;
+  position:relative;z-index:1;
+}
+.v2 .v2-lvlpill{
+  margin-left:auto;display:inline-flex;align-items:center;gap:5px;
+  background:rgba(235,161,60,.16);border:1px solid rgba(235,161,60,.5);
+  padding:5px 10px;border-radius:999px;font-size:11px;font-weight:800;color:#EBA13C;
+  white-space:nowrap;
+}
+.v2 .v2-xpwrap{
+  margin:15px 0 4px;position:relative;z-index:1;
+}
+.v2 .v2-xprow{
+  display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px;
+}
+.v2 .v2-xplabel{font-size:11px;font-weight:700;color:#9696B9;letter-spacing:.3px;}
+.v2 .v2-xpval{font-size:11px;font-weight:800;color:#fff;}
+.v2 .v2-xpval b{color:#EBA13C;}
+.v2 .v2-bar{
+  height:11px;border-radius:999px;background:rgba(255,255,255,.1);
+  border:1px solid rgba(255,255,255,.12);overflow:hidden;position:relative;
+}
+.v2 .v2-fill{
+  height:100%;width:67%;border-radius:999px;
+  background:linear-gradient(90deg,#0F9F80,#6B8CFF);
+  box-shadow:0 0 12px rgba(107,140,255,.6);
+  position:relative;
+}
+.v2 .v2-fill::after{
+  content:"";position:absolute;top:0;right:0;width:14px;height:100%;
+  background:rgba(255,255,255,.45);filter:blur(3px);
+}
+.v2 .v2-quests{
+  list-style:none;margin:18px 0 0;padding:0;display:flex;flex-direction:column;gap:10px;
+  position:relative;z-index:1;
+}
+.v2 .v2-q{
+  display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:16px;
+  position:relative;
+}
+.v2 .v2-icon{
+  width:42px;height:42px;border-radius:13px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.v2 .v2-icon svg{width:22px;height:22px;}
+.v2 .v2-body{flex:1;min-width:0;}
+.v2 .v2-kicker{
+  font-size:9.5px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  margin-bottom:2px;
+}
+.v2 .v2-name{font-size:14.5px;font-weight:700;letter-spacing:-.2px;line-height:1.15;}
+.v2 .v2-meta{font-size:11.5px;font-weight:600;margin-top:1px;}
+
+/* ACTIVE QUEST */
+.v2 .v2-q.active{
+  background:linear-gradient(135deg,rgba(56,92,248,.32),rgba(107,140,255,.14));
+  border:1.5px solid #6B8CFF;
+  box-shadow:0 0 0 1px rgba(107,140,255,.2),0 10px 26px -10px rgba(56,92,248,.85);
+}
+.v2 .v2-q.active .v2-icon{
+  background:#385CF8;
+  box-shadow:0 0 0 4px rgba(56,92,248,.28),0 0 16px rgba(107,140,255,.7);
+  animation:v2pulse 2.2s ease-in-out infinite;
+}
+.v2 .v2-q.active .v2-icon svg{color:#fff;}
+.v2 .v2-q.active .v2-kicker{color:#6B8CFF;}
+.v2 .v2-q.active .v2-name{color:#fff;}
+.v2 .v2-q.active .v2-meta{color:#fff;}
+.v2 .v2-marker{
+  width:9px;height:9px;border-radius:50%;background:#EBA13C;flex:none;margin-left:4px;
+  box-shadow:0 0 0 4px rgba(235,161,60,.22);
+  animation:v2pulse 1.6s ease-in-out infinite;
+}
+@keyframes v2pulse{
+  0%,100%{box-shadow:0 0 0 4px rgba(56,92,248,.28),0 0 12px rgba(107,140,255,.55);}
+  50%{box-shadow:0 0 0 7px rgba(56,92,248,.12),0 0 22px rgba(107,140,255,.85);}
+}
+
+/* COMPLETED BADGES */
+.v2 .v2-q.done{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(15,159,128,.45);
+}
+.v2 .v2-q.done .v2-icon{
+  background:rgba(15,159,128,.18);
+  border:1px solid rgba(15,159,128,.6);
+}
+.v2 .v2-q.done .v2-icon svg{color:#0F9F80;}
+.v2 .v2-q.done .v2-kicker{color:#0F9F80;}
+.v2 .v2-q.done .v2-name{color:#fff;opacity:.92;}
+.v2 .v2-q.done .v2-meta{color:#9696B9;}
+.v2 .v2-medal{
+  width:26px;height:26px;border-radius:50%;flex:none;margin-left:4px;
+  display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#0F9F80,#0c8068);
+  box-shadow:0 4px 10px -3px rgba(15,159,128,.8);
+}
+.v2 .v2-medal svg{width:15px;height:15px;color:#E8FCF7;}
+.v2 .v2-amt{
+  color:#fff;font-weight:800;background:rgba(15,159,128,.2);
+  padding:1px 7px;border-radius:7px;font-size:11px;margin-left:5px;
+}
+
+/* H · Vela Chat */
+.v3{background:linear-gradient(180deg,#F0F3FF 0%,#fff 38%);padding:16px 14px 18px}
+.v3 .v3-bar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.v3 .v3-av{width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#385CF8,#6B8CFF);box-shadow:0 6px 14px -4px rgba(56,92,248,.55);position:relative}
+.v3 .v3-av svg{width:20px;height:20px;fill:#fff}
+.v3 .v3-av::after{content:"";position:absolute;right:-1px;bottom:-1px;width:11px;height:11px;border-radius:50%;background:var(--success);border:2.5px solid #fff}
+.v3 .v3-id b{display:block;font:800 13px var(--font-primary);color:var(--text-dark);letter-spacing:-.01em;line-height:1.1}
+.v3 .v3-id span{font:600 10px var(--font-primary);letter-spacing:.12em;text-transform:uppercase;color:var(--text-gray-med)}
+.v3 .v3-eye{font:700 10px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;color:var(--text-gray-med);margin:0 2px 10px}
+.v3 .v3-bub{position:relative;background:#fff;border:1px solid var(--stroke);border-radius:16px 16px 16px 5px;padding:12px 14px;box-shadow:0 8px 20px -14px rgba(22,22,67,.35);max-width:92%}
+.v3 .v3-bub p{margin:0;font:600 13.5px/1.45 var(--font-primary);color:var(--text-dark)}
+.v3 .v3-bub p b{color:var(--brand);font-weight:800}
+.v3 .v3-bub .v3-sub{margin-top:5px;font:700 11px var(--font-primary);color:var(--success);display:flex;align-items:center;gap:5px}
+.v3 .v3-bub .v3-sub svg{width:13px;height:13px}
+.v3 .v3-chips{margin-top:12px;display:flex;flex-direction:column;gap:8px;align-items:flex-end}
+.v3 .v3-chip{width:100%;display:flex;align-items:center;gap:11px;padding:11px 13px;border-radius:14px 14px 5px 14px;background:#fff;border:1px solid var(--stroke)}
+.v3 .v3-chip .ic{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center}
+.v3 .v3-chip .ic svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.9}
+.v3 .v3-chip .tx{flex:1;min-width:0}
+.v3 .v3-chip .tx b{display:block;font:700 13.5px var(--font-primary);color:var(--text-dark);line-height:1.15}
+.v3 .v3-chip .tx span{font:600 11px var(--font-primary)}
+.v3 .v3-chip .badge{display:inline-flex;align-items:center;gap:5px;font:700 11px var(--font-primary)}
+.v3 .v3-chip .badge .ck{width:18px;height:18px;border-radius:50%;background:var(--success);color:#fff;display:grid;place-items:center;flex:none}
+.v3 .v3-chip .badge .ck svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:3}
+.v3 .v3-done .ic{background:var(--success-light);color:var(--success)}
+.v3 .v3-done .tx span{color:var(--success)}
+.v3 .v3-amt{font:800 13px var(--font-primary);color:var(--text-dark);flex:none}
+.v3 .v3-pending{background:linear-gradient(135deg,#385CF8,#5577FF);border-color:transparent;box-shadow:0 12px 24px -12px rgba(56,92,248,.7);position:relative;overflow:hidden}
+.v3 .v3-pending::after{content:"";position:absolute;right:-22px;top:-26px;width:90px;height:90px;border-radius:50%;background:rgba(255,255,255,.12)}
+.v3 .v3-pending .ic{background:rgba(255,255,255,.2);color:#fff}
+.v3 .v3-pending .tx b{color:#fff}
+.v3 .v3-pending .tx span{color:rgba(255,255,255,.85)}
+.v3 .v3-pending .pin{position:relative;z-index:1;font:700 10px var(--font-primary);letter-spacing:.04em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.22);padding:4px 9px;border-radius:99px;flex:none}
+.v3 .v3-reply{margin-top:12px;display:flex;justify-content:flex-end}
+.v3 .v3-cta{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 20px;border-radius:99px;background:var(--brand);color:#fff;font:800 13.5px var(--font-primary);border:0;box-shadow:0 10px 22px -8px rgba(56,92,248,.65);cursor:pointer}
+.v3 .v3-cta svg{width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2.4}
+
+/* I · Two Thirds */
+.v4{background:#fff;padding:32px 28px 28px;font-family:var(--font-primary,system-ui);color:#161643;-webkit-font-smoothing:antialiased}
+.v4 .v4-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#9696B9;font-weight:600;margin:0}
+.v4 .v4-hero{display:flex;align-items:baseline;gap:14px;margin:18px 0 4px}
+.v4 .v4-frac{display:flex;align-items:center;font-weight:600;line-height:.86;letter-spacing:-.04em}
+.v4 .v4-num{font-size:88px;color:#161643}
+.v4 .v4-slash{font-size:52px;color:#E8E9F1;font-weight:300;margin:0 2px;transform:translateY(-4px)}
+.v4 .v4-den{font-size:52px;color:#9696B9;font-weight:500;align-self:flex-end}
+.v4 .v4-hero-meta{display:flex;flex-direction:column;gap:2px;padding-bottom:8px}
+.v4 .v4-hero-title{font-size:17px;font-weight:600;letter-spacing:-.01em;margin:0}
+.v4 .v4-hero-sub{font-size:13px;color:#9696B9;margin:0}
+.v4 .v4-bar{height:3px;border-radius:99px;background:#F0F0F8;margin:14px 0 26px;overflow:hidden}
+.v4 .v4-bar i{display:block;height:100%;width:66.6%;border-radius:99px;background:#161643}
+.v4 .v4-list{list-style:none;margin:0;padding:0}
+.v4 .v4-row{display:flex;align-items:center;gap:16px;padding:17px 0;border-top:1px solid #E8E9F1}
+.v4 .v4-row:last-child{border-bottom:1px solid #E8E9F1}
+.v4 .v4-ico{width:24px;height:24px;flex:none;color:#9696B9}
+.v4 .v4-row.is-active .v4-ico{color:#385CF8}
+.v4 .v4-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.v4 .v4-name{font-size:15px;font-weight:550;letter-spacing:-.01em;color:#161643}
+.v4 .v4-row.is-active .v4-name{font-weight:600}
+.v4 .v4-status{font-size:12.5px;color:#9696B9}
+.v4 .v4-row.is-active .v4-status{color:#385CF8;font-weight:500}
+.v4 .v4-amt{font-size:13px;color:#6B6B95;font-variant-numeric:tabular-nums;font-weight:500}
+.v4 .v4-dot{width:9px;height:9px;border-radius:99px;flex:none}
+.v4 .v4-dot.done{background:#0F9F80}
+.v4 .v4-dot.active{background:#385CF8;box-shadow:0 0 0 4px rgba(56,92,248,.14)}
+.v4 .v4-cta{margin-top:24px;width:100%;border:none;background:#385CF8;color:#fff;font-family:inherit;font-size:15px;font-weight:600;letter-spacing:-.01em;padding:16px;border-radius:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.v4 .v4-cta svg{width:18px;height:18px}
+
+/* J · Bento Grid */
+.v5{background:var(--bg-screen);padding:14px;box-shadow:0 14px 40px -16px rgba(22,22,67,.28)}
+.v5 .v5-eye{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 12px}
+.v5 .v5-eye .t{font:800 13px var(--font-primary);letter-spacing:-.01em;color:var(--text-dark)}
+.v5 .v5-eye .p{font:800 9.5px var(--font-primary);letter-spacing:.12em;text-transform:uppercase;color:var(--success);background:var(--success-light);padding:5px 9px;border-radius:999px}
+.v5 .v5-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.v5 .tile{border-radius:18px;padding:14px;box-sizing:border-box;position:relative;overflow:hidden}
+
+.v5 .big{grid-column:1 / -1;background:linear-gradient(135deg,#385CF8,#2945C5);color:#fff;padding:18px;box-shadow:0 12px 26px -10px rgba(56,92,248,.55)}
+.v5 .big .glow{position:absolute;width:150px;height:150px;border-radius:50%;background:rgba(107,140,255,.45);filter:blur(8px);top:-58px;right:-40px}
+.v5 .big .row1{display:flex;align-items:center;gap:11px;position:relative}
+.v5 .big .ic{width:42px;height:42px;border-radius:13px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.v5 .big .ic svg{width:23px;height:23px}
+.v5 .big .meta{flex:1;min-width:0}
+.v5 .big .meta .k{font:800 9px var(--font-primary);letter-spacing:.14em;text-transform:uppercase;opacity:.82}
+.v5 .big .meta .n{font:800 18px/1.1 var(--font-primary);letter-spacing:-.01em;margin-top:3px}
+.v5 .big .pend{font:800 9px var(--font-primary);letter-spacing:.06em;text-transform:uppercase;background:#fff;color:var(--brand-dark);padding:5px 9px;border-radius:999px;align-self:flex-start;flex-shrink:0}
+.v5 .big .cta{position:relative;margin-top:15px;display:flex;align-items:center;justify-content:center;gap:8px;height:44px;border-radius:13px;background:#fff;color:var(--brand);font:800 13.5px var(--font-primary);letter-spacing:-.01em}
+.v5 .big .cta svg{width:17px;height:17px}
+
+.v5 .done{background:#fff;border:1px solid var(--stroke)}
+.v5 .done .top{display:flex;align-items:center;justify-content:space-between}
+.v5 .done .ic{width:38px;height:38px;border-radius:12px;background:var(--success-light);display:flex;align-items:center;justify-content:center}
+.v5 .done .ic svg{width:21px;height:21px}
+.v5 .done .chk{width:20px;height:20px;border-radius:50%;background:var(--success);display:flex;align-items:center;justify-content:center}
+.v5 .done .chk svg{width:12px;height:12px}
+.v5 .done .k{font:800 8.5px var(--font-primary);letter-spacing:.12em;text-transform:uppercase;color:var(--success);margin:13px 0 2px}
+.v5 .done .n{font:800 13.5px/1.15 var(--font-primary);letter-spacing:-.01em;color:var(--text-dark)}
+.v5 .done .amt{font:800 12px var(--font-primary);color:var(--text-gray);margin-top:3px}
+.v5 .done .amt b{color:var(--text-dark)}
+
+/* K · Swipe Deck */
+.v6{background:linear-gradient(180deg,#F0F3FF 0%,#fff 58%);padding:18px 0 16px;overflow:hidden}
+.v6 .v6-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 18px;margin-bottom:4px}
+.v6 .v6-eye{font:800 10px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--brand,#385CF8)}
+.v6 .v6-prog{font:700 11px var(--font-primary,system-ui);color:var(--text-gray-med,#9696B9)}
+.v6 .v6-prog b{color:var(--text-dark,#161643)}
+.v6 .v6-title{font:800 19px/1.2 var(--font-primary,system-ui);letter-spacing:-.02em;color:var(--text-dark,#161643);padding:0 18px;margin:0 0 16px}
+.v6 .v6-deck{position:relative;height:212px;margin-bottom:16px}
+.v6 .v6-card{position:absolute;top:0;box-sizing:border-box;border-radius:18px;border:1px solid var(--stroke,#E8E9F1);background:#fff}
+.v6 .v6-side{width:46px;height:182px;top:14px;padding:0;overflow:hidden;background:var(--success-light,#E8FCF7);border-color:#CDEFE6}
+.v6 .v6-side.left{left:-8px;transform:rotate(-4deg)}
+.v6 .v6-side.right{right:-8px;transform:rotate(4deg)}
+.v6 .v6-side .v6-edge{position:absolute;top:0;bottom:0;width:4px;background:var(--success,#0F9F80)}
+.v6 .v6-side.left .v6-edge{right:0}
+.v6 .v6-side.right .v6-edge{left:0}
+.v6 .v6-side .v6-sico{position:absolute;top:18px;width:30px;height:30px;border-radius:9px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 8px -3px rgba(15,159,128,.5)}
+.v6 .v6-side.left .v6-sico{left:8px}
+.v6 .v6-side.right .v6-sico{right:8px}
+.v6 .v6-side .v6-sico svg{width:17px;height:17px;stroke:var(--success,#0F9F80);fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.v6 .v6-side .v6-vlab{position:absolute;bottom:14px;font:800 9px var(--font-primary,system-ui);letter-spacing:.12em;text-transform:uppercase;color:var(--success,#0F9F80);white-space:nowrap}
+.v6 .v6-side.left .v6-vlab{left:16px;transform:rotate(-90deg);transform-origin:left bottom}
+.v6 .v6-side.right .v6-vlab{right:16px;transform:rotate(90deg);transform-origin:right bottom}
+.v6 .v6-side .v6-check{position:absolute;bottom:12px;width:20px;height:20px;border-radius:50%;background:var(--success,#0F9F80);display:flex;align-items:center;justify-content:center}
+.v6 .v6-side.left .v6-check{left:13px}
+.v6 .v6-side.right .v6-check{right:13px}
+.v6 .v6-side .v6-check svg{width:11px;height:11px;stroke:#fff;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.v6 .v6-active{left:40px;right:40px;top:0;padding:18px 18px 16px;background:linear-gradient(160deg,#fff,#FBFCFF);border-color:#DCE3FF;box-shadow:0 22px 44px -18px rgba(56,92,248,.42),0 0 0 1px rgba(56,92,248,.06)}
+.v6 .v6-active .v6-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.v6 .v6-active .v6-iconwrap{position:relative;width:48px;height:48px}
+.v6 .v6-active .v6-icon{position:absolute;inset:0;border-radius:14px;background:linear-gradient(150deg,var(--brand-light,#6B8CFF),var(--brand,#385CF8));display:flex;align-items:center;justify-content:center;box-shadow:0 10px 20px -8px rgba(56,92,248,.6)}
+.v6 .v6-active .v6-icon svg{width:25px;height:25px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.v6 .v6-active .v6-badge{display:inline-flex;align-items:center;gap:5px;height:25px;padding:0 11px;border-radius:999px;background:var(--bg-blue-light,#F0F3FF);border:1px solid #DCE3FF;font:800 10px var(--font-primary,system-ui);letter-spacing:.04em;text-transform:uppercase;color:var(--brand,#385CF8)}
+.v6 .v6-active .v6-badge i{width:6px;height:6px;border-radius:50%;background:var(--brand,#385CF8);animation:v6pulse 1.8s ease-in-out infinite}
+@keyframes v6pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.v6 .v6-active .v6-step{font:800 9.5px var(--font-primary,system-ui);letter-spacing:.14em;text-transform:uppercase;color:var(--text-gray-med,#9696B9);margin-bottom:5px}
+.v6 .v6-active .v6-name{font:800 18px/1.15 var(--font-primary,system-ui);letter-spacing:-.01em;color:var(--text-dark,#161643);margin:0 0 5px}
+.v6 .v6-active .v6-sub{font:500 12.5px/1.45 var(--font-primary,system-ui);color:var(--text-gray,#6B6B95);margin:0 0 16px}
+.v6 .v6-active .v6-cta{display:flex;align-items:center;justify-content:center;gap:8px;height:46px;border-radius:13px;background:var(--brand,#385CF8);color:#fff;font:800 14px var(--font-primary,system-ui);letter-spacing:.01em;box-shadow:0 12px 22px -10px rgba(56,92,248,.75)}
+.v6 .v6-active .v6-cta svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.v6 .v6-foot{display:flex;align-items:center;justify-content:center;gap:9px;padding:0 18px}
+.v6 .v6-dots{display:flex;align-items:center;gap:7px}
+.v6 .v6-dots span{width:7px;height:7px;border-radius:50%;background:var(--success,#0F9F80)}
+.v6 .v6-dots span.act{width:22px;border-radius:999px;background:var(--brand,#385CF8)}
+.v6 .v6-swipe{display:inline-flex;align-items:center;gap:5px;font:700 10.5px var(--font-primary,system-ui);color:var(--text-gray-med,#9696B9);letter-spacing:.02em}
+.v6 .v6-swipe svg{width:13px;height:13px;stroke:var(--text-gray-med,#9696B9);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+
+/* L · Accordion Focus */
+.v7{background:#fff}
+.v7 .v7-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:14px}
+.v7 .v7-prog{font:800 11px/1 var(--font-primary,system-ui);color:var(--text-gray-med,#9696B9)}
+.v7 .v7-prog b{color:var(--brand,#385CF8)}
+.v7 .v7-list{display:flex;flex-direction:column;gap:10px}
+
+/* open (pending) card */
+.v7 .v7-open{border:1.5px solid var(--brand,#385CF8);border-radius:16px;overflow:hidden;background:linear-gradient(180deg,#F0F3FF,#fff 64%);box-shadow:0 10px 26px -16px rgba(56,92,248,.5)}
+.v7 .v7-otop{display:flex;align-items:center;gap:12px;padding:14px 15px 12px}
+.v7 .v7-ic{width:38px;height:38px;border-radius:11px;flex:none;display:grid;place-items:center;background:var(--brand,#385CF8);color:#fff;box-shadow:0 6px 14px -5px rgba(56,92,248,.7)}
+.v7 .v7-ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:2}
+.v7 .v7-otop .v7-meta{flex:1;min-width:0}
+.v7 .v7-nm{font:800 15px/1.1 var(--font-primary,system-ui);color:var(--text-dark,#161643);letter-spacing:-.01em}
+.v7 .v7-pill{display:inline-flex;align-items:center;gap:5px;margin-top:4px;height:19px;padding:0 9px;border-radius:99px;background:var(--brand,#385CF8);color:#fff;font:800 9.5px/1 var(--font-primary,system-ui);letter-spacing:.04em;text-transform:uppercase}
+.v7 .v7-pill i{width:5px;height:5px;border-radius:50%;background:#fff;display:block}
+.v7 .v7-chev{width:24px;height:24px;flex:none;color:var(--brand,#385CF8)}
+.v7 .v7-chev svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;margin:0 auto}
+.v7 .v7-obody{padding:0 15px 14px 65px}
+.v7 .v7-det{font:500 12.5px/1.45 var(--font-primary,system-ui);color:var(--text-gray,#6B6B95);margin:0 0 13px}
+.v7 .v7-det b{color:var(--text-dark,#161643);font-weight:700}
+.v7 .v7-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:44px;border:0;border-radius:12px;background:var(--brand,#385CF8);color:#fff;font:800 13.5px/1 var(--font-primary,system-ui);letter-spacing:.01em;cursor:pointer;box-shadow:0 8px 18px -8px rgba(56,92,248,.8)}
+.v7 .v7-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.6}
+
+/* collapsed (done) rows */
+.v7 .v7-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--stroke,#E8E9F1);border-radius:14px;background:#fff}
+.v7 .v7-ck{width:24px;height:24px;border-radius:50%;flex:none;display:grid;place-items:center;background:var(--success-light,#E8FCF7);color:var(--success,#0F9F80)}
+.v7 .v7-ck svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:3}
+.v7 .v7-rnm{flex:1;font:700 13.5px/1.1 var(--font-primary,system-ui);color:var(--text-dark,#161643)}
+.v7 .v7-amt{font:700 12.5px/1 var(--font-primary,system-ui);color:var(--text-gray,#6B6B95);margin-right:2px}
+.v7 .v7-done{display:inline-flex;align-items:center;gap:5px;font:800 9.5px/1 var(--font-primary,system-ui);letter-spacing:.06em;text-transform:uppercase;color:var(--success,#0F9F80)}
+.v7 .v7-done svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+
+/* M · Receipt */
+.v8{background:#fff;padding:0;border-radius:18px;overflow:hidden;font-family:var(--font-primary,system-ui);position:relative;box-shadow:0 1px 0 #E8E9F1 inset}
+.v8 .rcpt{padding:22px 22px 0}
+.v8 .rcpt-head{text-align:center;padding-bottom:16px;border-bottom:2px dashed #E8E9F1}
+.v8 .store{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9696B9;font-weight:700;margin-bottom:7px}
+.v8 .title{font-size:19px;font-weight:800;color:#161643;letter-spacing:-.01em;line-height:1.15}
+.v8 .meta{margin-top:8px;font-size:11px;color:#9696B9;font-family:ui-monospace,"SF Mono",Menlo,monospace;letter-spacing:.01em}
+.v8 .items{padding:6px 0 4px}
+.v8 .item{display:flex;align-items:center;gap:11px;padding:13px 0}
+.v8 .ic{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center}
+.v8 .ic svg{width:19px;height:19px}
+.v8 .ic-pend{background:#F0F3FF;color:#385CF8;box-shadow:0 0 0 1.5px #385CF8 inset}
+.v8 .ic-done{background:#E8FCF7;color:#0F9F80}
+.v8 .body{flex:1;min-width:0;display:flex;align-items:baseline;gap:6px}
+.v8 .lbl{font-size:14px;font-weight:700;color:#161643;white-space:nowrap}
+.v8 .lead{flex:1;border-bottom:2px dotted #D7D9EA;transform:translateY(-3px);min-width:14px}
+.v8 .stat{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:12px;font-weight:700;white-space:nowrap;letter-spacing:.01em}
+.v8 .stat-done{color:#0F9F80}
+.v8 .stat-pend{color:#385CF8}
+.v8 .amt{display:block;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:11px;color:#6B6B95;margin-top:2px;letter-spacing:.01em}
+.v8 .pendrow{position:relative}
+.v8 .pendrow .body{flex-direction:column;align-items:stretch;gap:3px}
+.v8 .pendline{display:flex;align-items:baseline;gap:6px}
+.v8 .hint{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10.5px;color:#385CF8;font-weight:600}
+.v8 .tear{border:none;border-top:2px dashed #E8E9F1;margin:2px 0 0}
+.v8 .total{display:flex;align-items:center;gap:6px;padding:15px 22px 14px;background:#F0F3FF;border-top:2px dashed #C8D2FF}
+.v8 .total-lbl{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#2945C5;font-weight:800}
+.v8 .total-lead{flex:1;border-bottom:2px dotted #B7C4FF;transform:translateY(-3px)}
+.v8 .total-val{font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:15px;font-weight:800;color:#161643}
+.v8 .total-val b{color:#385CF8}
+.v8 .barcode{display:flex;gap:2px;justify-content:center;align-items:flex-end;height:26px;padding:13px 22px 9px}
+.v8 .barcode span{width:2px;background:#161643;border-radius:1px;opacity:.85}
+.v8 .foot{text-align:center;font-family:ui-monospace,"SF Mono",Menlo,monospace;font-size:10px;letter-spacing:.16em;color:#9696B9;padding:0 22px 18px;text-transform:uppercase}
+.v8 .scallop{height:11px;display:block;background:radial-gradient(circle at 6px 11px,transparent 0 6px,#fff 6.5px) repeat-x;background-size:12px 11px;background-position:0 -5px}
+
+/* N · Segmented Donut */
+.v9{background:#fff;padding:24px 22px;border-radius:24px;font-family:var(--font-primary,system-ui);color:#161643;box-shadow:0 1px 0 #E8E9F1 inset,0 12px 28px -18px rgba(22,22,67,.22)}
+.v9 .v9-eye{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#9696B9;margin:0 0 2px}
+.v9 .v9-title{font-size:19px;font-weight:800;letter-spacing:-.01em;margin:0 0 20px}
+.v9 .v9-gauge{position:relative;width:168px;height:168px;margin:0 auto 22px;display:grid;place-items:center}
+.v9 .v9-gauge svg{width:168px;height:168px;transform:rotate(-90deg);display:block}
+.v9 .v9-track{fill:none;stroke:#F0F0F8;stroke-width:15}
+.v9 .v9-arc{fill:none;stroke-width:15;stroke-linecap:round}
+.v9 .v9-arc.g{stroke:#0F9F80}
+.v9 .v9-arc.b{stroke:#385CF8}
+.v9 .v9-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center;line-height:1}
+.v9 .v9-frac{font-size:34px;font-weight:800;letter-spacing:-.02em;color:#161643}
+.v9 .v9-frac span{color:#9696B9;font-size:20px;font-weight:700}
+.v9 .v9-sub{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#9696B9;margin-top:5px}
+.v9 .v9-list{display:flex;flex-direction:column;gap:9px}
+.v9 .v9-row{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:16px;background:#F0F0F8;border:1px solid transparent}
+.v9 .v9-row.pending{background:#F0F3FF;border-color:rgba(56,92,248,.18);box-shadow:0 8px 18px -12px rgba(56,92,248,.45)}
+.v9 .v9-ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;flex:none}
+.v9 .v9-ic svg{width:21px;height:21px;display:block}
+.v9 .v9-ic.g{background:#E8FCF7;color:#0F9F80}
+.v9 .v9-ic.b{background:#385CF8;color:#fff}
+.v9 .v9-body{flex:1;min-width:0}
+.v9 .v9-name{font-size:14.5px;font-weight:700;letter-spacing:-.01em;display:flex;align-items:center;gap:8px}
+.v9 .v9-dot{width:8px;height:8px;border-radius:50%;flex:none}
+.v9 .v9-dot.g{background:#0F9F80}
+.v9 .v9-dot.b{background:#385CF8}
+.v9 .v9-meta{font-size:12px;color:#6B6B95;margin-top:2px;font-weight:500}
+.v9 .v9-tag{font-size:11px;font-weight:800;letter-spacing:.02em;padding:5px 11px;border-radius:999px;flex:none}
+.v9 .v9-tag.done{background:#E8FCF7;color:#0F9F80;display:inline-flex;align-items:center;gap:4px}
+.v9 .v9-tag.done svg{width:13px;height:13px}
+.v9 .v9-tag.pend{background:#385CF8;color:#fff}
+
+/* O · Aurora Glass */
+.v10{position:relative;overflow:hidden;background:#0B0B2E;padding:22px 16px 18px;border-radius:26px;font-family:var(--font-primary,system-ui);isolation:isolate}
+.v10::before{content:"";position:absolute;inset:-40%;z-index:0;background:
+radial-gradient(38% 42% at 18% 12%,#385CF8 0%,rgba(56,92,248,0) 62%),
+radial-gradient(40% 40% at 86% 8%,#6B8CFF 0%,rgba(107,140,255,0) 60%),
+radial-gradient(46% 46% at 84% 92%,#0F9F80 0%,rgba(15,159,128,0) 60%),
+radial-gradient(42% 44% at 12% 90%,#2945C5 0%,rgba(41,69,197,0) 62%),
+radial-gradient(34% 34% at 50% 50%,#EBA13C 0%,rgba(235,161,60,0) 55%);
+filter:saturate(1.25) blur(8px);opacity:.92}
+.v10::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(120% 90% at 50% 0%,rgba(11,11,46,0) 40%,rgba(11,11,46,.55) 100%);pointer-events:none}
+.v10 .wrap{position:relative;z-index:2}
+.v10 .head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:16px}
+.v10 .eyb{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.66);margin:0 0 4px}
+.v10 .h1{font-size:19px;font-weight:800;letter-spacing:-.01em;color:#fff;margin:0;line-height:1.15;text-shadow:0 1px 18px rgba(0,0,0,.3)}
+.v10 .ring{position:relative;width:54px;height:54px;flex:0 0 auto}
+.v10 .ring svg{transform:rotate(-90deg);display:block}
+.v10 .ring .trk{stroke:rgba(255,255,255,.18)}
+.v10 .ring .arc{stroke:#fff;stroke-linecap:round;filter:drop-shadow(0 0 5px rgba(255,255,255,.7))}
+.v10 .ring .num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;line-height:1}
+.v10 .ring .num b{font-size:15px;font-weight:800}
+.v10 .ring .num span{font-size:8.5px;font-weight:600;letter-spacing:.08em;color:rgba(255,255,255,.7);text-transform:uppercase;margin-top:1px}
+.v10 .list{display:flex;flex-direction:column;gap:11px}
+.v10 .tile{position:relative;display:flex;align-items:center;gap:13px;padding:14px;border-radius:18px;background:rgba(255,255,255,.1);backdrop-filter:blur(16px) saturate(1.4);-webkit-backdrop-filter:blur(16px) saturate(1.4);border:1px solid rgba(255,255,255,.22);box-shadow:0 8px 28px rgba(11,11,46,.28),inset 0 1px 0 rgba(255,255,255,.35)}
+.v10 .tile.focus{background:rgba(56,92,248,.28);border:1.5px solid rgba(157,180,255,.85);box-shadow:0 10px 34px rgba(56,92,248,.5),0 0 0 1px rgba(56,92,248,.4),inset 0 1px 0 rgba(255,255,255,.4)}
+.v10 .ico{position:relative;width:42px;height:42px;flex:0 0 auto;border-radius:13px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28)}
+.v10 .tile.focus .ico{background:linear-gradient(150deg,#6B8CFF,#385CF8);border:1px solid rgba(255,255,255,.5);box-shadow:0 0 14px rgba(107,140,255,.75)}
+.v10 .ico svg{width:22px;height:22px}
+.v10 .ico.gr{background:linear-gradient(150deg,#28D6B0,#0F9F80);border:1px solid rgba(255,255,255,.45);box-shadow:0 0 12px rgba(15,159,128,.6)}
+.v10 .txt{flex:1;min-width:0}
+.v10 .tt{font-size:14.5px;font-weight:700;color:#fff;margin:0;line-height:1.2;text-shadow:0 1px 8px rgba(0,0,0,.25)}
+.v10 .ts{display:block;font-size:11.5px;font-weight:600;color:rgba(255,255,255,.78);margin-top:3px}
+.v10 .pill{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;border-radius:999px;font-size:11px;font-weight:700;white-space:nowrap}
+.v10 .pill.go{background:rgba(255,255,255,.92);color:#2945C5;box-shadow:0 0 16px rgba(157,180,255,.6)}
+.v10 .pill.go svg{width:13px;height:13px}
+.v10 .pill.done{background:rgba(232,252,247,.2);color:#C6FFEE;border:1px solid rgba(40,214,176,.5)}
+.v10 .pill.done svg{width:13px;height:13px}
+.v10 .amt{font-size:13px;font-weight:800;color:#fff;white-space:nowrap}
+</style>
+</head>
+<body>
+  <h1 class="pg">"Complete your check-in" — 10 more ideas</h1>
+  <p class="pg">Guest registration (pending) · Security deposit (done) · Balance payment (done)</p>
+  <div class="grid">
+
+    <div class="col">
+      <span class="lab">F · Boarding Pass</span>
+      <div class="desc">Tu check-in convertido en una tarjeta de embarque: tres campos del billete y un 2/3 a bordo.</div>
+      <div class="frame v1"><div class="tkt">
+  <div class="strip">
+    <div class="brand">
+      <span class="plane"><svg viewBox="0 0 24 24"><path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V19l-2 1.5V22l3.5-1 3.5 1v-1.5L13 19v-5.5z"/></svg></span>
+      <div>
+        <div class="eyb">Chekin · Boarding</div>
+        <div class="ttl">Complete your check-in</div>
+      </div>
+    </div>
+    <div class="board">
+      <b>2<i>/3</i></b>
+      <span>Boarded</span>
+    </div>
+  </div>
+
+  <div class="perf"><span class="dash"></span></div>
+
+  <div class="fields">
+    <div class="row go">
+      <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20a7 7 0 0 1 14 0"/></svg></span>
+      <div class="fld">
+        <div class="k">Passenger</div>
+        <div class="v">Guest registration</div>
+      </div>
+      <div class="end"><span class="seat">1 pending</span></div>
+    </div>
+
+    <div class="row ok">
+      <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V6z"/></svg></span>
+      <div class="fld">
+        <div class="k">Class</div>
+        <div class="v">Security deposit</div>
+      </div>
+      <div class="end"><span class="stamp"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></div>
+    </div>
+
+    <div class="row ok">
+      <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="M3 10h18"/></svg></span>
+      <div class="fld">
+        <div class="k">Fare</div>
+        <div class="v">Balance payment</div>
+      </div>
+      <div class="end"><span class="amt">€340</span><span class="stamp"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7"/></svg></span></div>
+    </div>
+  </div>
+
+  <div class="stub">
+    <span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <div class="ref">
+      <div class="k">Booking ref</div>
+      <div class="c">CHK-2A9</div>
+    </div>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">G · Quest Log</span>
+      <div class="desc">Convierte el check-in en una aventura con barra de XP, nivel y misiones por completar.</div>
+      <div class="frame v2"><div class="v2-glow"></div>
+<div class="v2-head">
+  <span class="v2-eye">Tu aventura</span>
+  <span class="v2-lvlpill">
+    <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15 9 22 9.3 16.5 14 18.5 21 12 17 5.5 21 7.5 14 2 9.3 9 9"/></svg>
+    Nivel 2 de 3
+  </span>
+</div>
+<h3 class="v2-title">Complete your check-in</h3>
+
+<div class="v2-xpwrap">
+  <div class="v2-xprow">
+    <span class="v2-xplabel">PROGRESO DE LA MISIÓN</span>
+    <span class="v2-xpval"><b>2</b> / 3 XP</span>
+  </div>
+  <div class="v2-bar"><div class="v2-fill"></div></div>
+</div>
+
+<ul class="v2-quests">
+  <li class="v2-q active">
+    <span class="v2-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 21v-1a7 7 0 0 1 14 0v1"/></svg>
+    </span>
+    <div class="v2-body">
+      <div class="v2-kicker">Misión activa</div>
+      <div class="v2-name">Guest registration</div>
+      <div class="v2-meta">1 pending</div>
+    </div>
+    <span class="v2-marker"></span>
+  </li>
+
+  <li class="v2-q done">
+    <span class="v2-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.4 8 10 4.6-1.6 8-5 8-10V5l-8-3Z"/></svg>
+    </span>
+    <div class="v2-body">
+      <div class="v2-kicker">Completado</div>
+      <div class="v2-name">Security deposit</div>
+      <div class="v2-meta">Insignia obtenida</div>
+    </div>
+    <span class="v2-medal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>
+  </li>
+
+  <li class="v2-q done">
+    <span class="v2-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="3"/><path d="M2.5 9.5h19"/></svg>
+    </span>
+    <div class="v2-body">
+      <div class="v2-kicker">Completado</div>
+      <div class="v2-name">Balance payment<span class="v2-amt">€340</span></div>
+      <div class="v2-meta">Insignia obtenida</div>
+    </div>
+    <span class="v2-medal">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </span>
+  </li>
+</ul></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">H · Vela Chat</span>
+      <div class="desc">Vela, tu asistente, te guia por chat: 2 hechas, falta 1, terminemos el registro.</div>
+      <div class="frame v3"><div class="v3-bar">
+  <span class="v3-av"><svg viewBox="0 0 24 24"><path d="M12 2.5l1.9 5.1a4 4 0 0 0 2.4 2.4L21.5 12l-5.2 1.9a4 4 0 0 0-2.4 2.4L12 21.5l-1.9-5.2a4 4 0 0 0-2.4-2.4L2.5 12l5.2-1.9a4 4 0 0 0 2.4-2.4z"/></svg></span>
+  <span class="v3-id"><b>Vela</b><span>Tu asistente</span></span>
+</div>
+
+<div class="v3-eye">Complete your check-in</div>
+
+<div class="v3-bub">
+  <p>2 done, 1 to go — let's finish your <b>Guest registration</b>.</p>
+  <div class="v3-sub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>2 of 3 completed</div>
+</div>
+
+<div class="v3-chips">
+  <div class="v3-chip v3-pending">
+    <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+    <span class="tx"><b>Guest registration</b><span>Tap to register your guests</span></span>
+    <span class="pin">1 pending</span>
+  </div>
+  <div class="v3-chip v3-done">
+    <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2 4 5v7c0 5 3.5 8 8 10 4.5-2 8-5 8-10V5z"/></svg></span>
+    <span class="tx"><b>Security deposit</b><span>Complete</span></span>
+    <span class="badge"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span></span>
+  </div>
+  <div class="v3-chip v3-done">
+    <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h4"/></svg></span>
+    <span class="tx"><b>Balance payment</b><span>Complete</span></span>
+    <span class="v3-amt">€340</span>
+    <span class="badge"><span class="ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span></span>
+  </div>
+</div>
+
+<div class="v3-reply">
+  <button class="v3-cta">Let's do it<svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">I · Two Thirds</span>
+      <div class="desc">Restricción extrema: una fracción gigante como héroe y tareas como filas serenas con un punto de estado.</div>
+      <div class="frame v4"><p class="v4-eyebrow">Complete your check-in</p>
+<div class="v4-hero">
+  <div class="v4-frac">
+    <span class="v4-num">2</span>
+    <span class="v4-slash">&frasl;</span>
+    <span class="v4-den">3</span>
+  </div>
+  <div class="v4-hero-meta">
+    <p class="v4-hero-title">Almost there</p>
+    <p class="v4-hero-sub">One step left</p>
+  </div>
+</div>
+<div class="v4-bar"><i></i></div>
+<ul class="v4-list">
+  <li class="v4-row is-active">
+    <svg class="v4-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5.5 19.5a6.5 6.5 0 0 1 13 0"/></svg>
+    <div class="v4-body">
+      <span class="v4-name">Guest registration</span>
+      <span class="v4-status">1 pending</span>
+    </div>
+    <span class="v4-dot active"></span>
+  </li>
+  <li class="v4-row">
+    <svg class="v4-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.2 5 6v5.2c0 4 2.9 7.2 7 9 4.1-1.8 7-5 7-9V6z"/></svg>
+    <div class="v4-body">
+      <span class="v4-name">Security deposit</span>
+      <span class="v4-status">Completed</span>
+    </div>
+    <span class="v4-dot done"></span>
+  </li>
+  <li class="v4-row">
+    <svg class="v4-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5.5" width="18" height="13" rx="2.4"/><path d="M3 9.5h18"/></svg>
+    <div class="v4-body">
+      <span class="v4-name">Balance payment</span>
+      <span class="v4-status">Completed</span>
+    </div>
+    <span class="v4-amt">&euro;340</span>
+    <span class="v4-dot done"></span>
+  </li>
+</ul>
+<button class="v4-cta">Complete registration
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</button></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">J · Bento Grid</span>
+      <div class="desc">Mosaico asimetrico: la tarea pendiente domina en azul y las completadas se reducen a tiles verdes.</div>
+      <div class="frame v5"><div class="v5-eye"><span class="t">Complete your check-in</span><span class="p">2 of 3 done</span></div>
+<div class="v5-grid">
+  <div class="tile big">
+    <div class="glow"></div>
+    <div class="row1">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.6" stroke="#fff" stroke-width="2"/><path d="M5 19.5c0-3.6 3.1-5.5 7-5.5s7 1.9 7 5.5" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="meta"><div class="k">Step 1</div><div class="n">Guest registration</div></div>
+      <span class="pend">1 pending</span>
+    </div>
+    <div class="cta">Start now <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h13M13 6l6 6-6 6" stroke="#385CF8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+
+  <div class="tile done">
+    <div class="top">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z" stroke="#0F9F80" stroke-width="2" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#0F9F80" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="k">Done</div>
+    <div class="n">Security deposit</div>
+  </div>
+
+  <div class="tile done">
+    <div class="top">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5.5" width="18" height="13" rx="2.5" stroke="#0F9F80" stroke-width="2"/><path d="M3 9.5h18" stroke="#0F9F80" stroke-width="2"/><path d="M6.5 14.5h4" stroke="#0F9F80" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="chk"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12.5l4 4 10-10" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+    <div class="k">Done</div>
+    <div class="n">Balance payment</div>
+    <div class="amt"><b>€340</b> paid</div>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">K · Swipe Deck</span>
+      <div class="desc">Una baraja deslizable: la tarjeta pendiente al frente y las completadas asomando a los lados.</div>
+      <div class="frame v6"><div class="v6-head">
+  <span class="v6-eye">Tu check-in</span>
+  <span class="v6-prog"><b>2</b> de 3 listas</span>
+</div>
+<h2 class="v6-title">Completa tu check-in</h2>
+
+<div class="v6-deck">
+  <div class="v6-card v6-side left">
+    <span class="v6-edge"></span>
+    <span class="v6-sico"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></span>
+    <span class="v6-vlab">Fianza</span>
+    <span class="v6-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+  </div>
+
+  <div class="v6-card v6-side right">
+    <span class="v6-edge"></span>
+    <span class="v6-sico"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"/><path d="M3 10h18"/></svg></span>
+    <span class="v6-vlab">Pago €340</span>
+    <span class="v6-check"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></span>
+  </div>
+
+  <div class="v6-card v6-active">
+    <div class="v6-top">
+      <span class="v6-iconwrap">
+        <span class="v6-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c0-3.6 3.1-5.6 7-5.6s7 2 7 5.6"/></svg></span>
+      </span>
+      <span class="v6-badge"><i></i>1 pendiente</span>
+    </div>
+    <div class="v6-step">Paso 1 de 3</div>
+    <h3 class="v6-name">Registro de huéspedes</h3>
+    <p class="v6-sub">Registra los datos de cada huésped para finalizar tu entrada.</p>
+    <div class="v6-cta">Empezar ahora <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+  </div>
+</div>
+
+<div class="v6-foot">
+  <span class="v6-dots"><span class="act"></span><span></span><span></span></span>
+  <span class="v6-swipe">Desliza <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">L · Accordion Focus</span>
+      <div class="desc">Solo la tarea pendiente se despliega con su accion; las completadas se colapsan en filas finas con check.</div>
+      <div class="frame v7"><div class="v7-head">
+  <span class="eye">Complete your check-in</span>
+  <span class="v7-prog"><b>2</b> of 3 done</span>
+</div>
+<div class="v7-list">
+
+  <div class="v7-open">
+    <div class="v7-otop">
+      <span class="v7-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span>
+      <span class="v7-meta">
+        <span class="v7-nm">Guest registration</span><br>
+        <span class="v7-pill"><i></i>1 pending</span>
+      </span>
+      <span class="v7-chev"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></span>
+    </div>
+    <div class="v7-obody">
+      <p class="v7-det">One guest still needs to be registered. <b>It takes about 2 minutes</b> and must be done before arrival.</p>
+      <button class="v7-btn">Continue registration <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+    </div>
+  </div>
+
+  <div class="v7-row">
+    <span class="v7-ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+    <span class="v7-rnm">Security deposit</span>
+    <span class="v7-done">Done <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7"/></svg></span>
+  </div>
+
+  <div class="v7-row">
+    <span class="v7-ck"><svg viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></svg></span>
+    <span class="v7-rnm">Balance payment</span>
+    <span class="v7-amt">€340</span>
+    <span class="v7-done">Done <svg viewBox="0 0 24 24" fill="none"><path d="M5 12l5 5L20 7"/></svg></span>
+  </div>
+
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">M · Receipt</span>
+      <div class="desc">Tu check-in como un recibo detallado: lineas punteadas, numeros tabulares y un total claro.</div>
+      <div class="frame v8"><div class="rcpt">
+  <div class="rcpt-head">
+    <div class="store">Chekin · Booking</div>
+    <div class="title">Complete your check-in</div>
+    <div class="meta">REF 4821-AC · 13 JUN 2026</div>
+  </div>
+  <div class="items">
+    <div class="item pendrow">
+      <span class="ic ic-pend"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"/></svg></span>
+      <div class="body">
+        <div class="pendline">
+          <span class="lbl">Guest registration</span>
+          <span class="lead"></span>
+          <span class="stat stat-pend">1 PENDING</span>
+        </div>
+        <span class="hint">→ tap to complete</span>
+      </div>
+    </div>
+    <div class="item">
+      <span class="ic ic-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 7.7-7 9-4-1.3-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <div class="body">
+        <span class="lbl">Security deposit</span>
+        <span class="lead"></span>
+        <span class="stat stat-done">PAID ✓</span>
+      </div>
+    </div>
+    <div class="item">
+      <span class="ic ic-done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="M7 15h4"/></svg></span>
+      <div class="body">
+        <div style="display:flex;flex-direction:column;gap:1px">
+          <span class="lbl">Balance payment</span>
+          <span class="amt">€340.00</span>
+        </div>
+        <span class="lead" style="transform:translateY(-9px)"></span>
+        <span class="stat stat-done" style="align-self:flex-start;margin-top:1px">PAID ✓</span>
+      </div>
+    </div>
+  </div>
+</div>
+<hr class="tear"/>
+<div class="total">
+  <span class="total-lbl">Total</span>
+  <span class="total-lead"></span>
+  <span class="total-val"><b>2</b>/3 complete</span>
+</div>
+<div class="barcode">
+  <span style="height:18px"></span><span style="height:26px"></span><span style="height:11px"></span><span style="height:24px"></span><span style="height:9px"></span><span style="height:22px"></span><span style="height:26px"></span><span style="height:14px"></span><span style="height:20px"></span><span style="height:9px"></span><span style="height:26px"></span><span style="height:16px"></span><span style="height:24px"></span><span style="height:11px"></span><span style="height:22px"></span><span style="height:26px"></span><span style="height:13px"></span><span style="height:20px"></span><span style="height:9px"></span><span style="height:24px"></span><span style="height:26px"></span><span style="height:15px"></span><span style="height:21px"></span><span style="height:10px"></span>
+</div>
+<div class="foot">Thank you — see you soon</div>
+<span class="scallop"></span></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">N · Segmented Donut</span>
+      <div class="desc">Un medidor circular dividido en tres arcos muestra tu progreso de un vistazo.</div>
+      <div class="frame v9"><p class="v9-eye">Tu progreso</p>
+<h2 class="v9-title">Complete your check-in</h2>
+<div class="v9-gauge">
+  <svg viewBox="0 0 120 120" aria-hidden="true">
+    <circle class="v9-track" cx="60" cy="60" r="50"/>
+    <circle class="v9-arc g" cx="60" cy="60" r="50" stroke-dasharray="100.5 213.6" stroke-dashoffset="0"/>
+    <circle class="v9-arc g" cx="60" cy="60" r="50" stroke-dasharray="100.5 213.6" stroke-dashoffset="-104.7"/>
+    <circle class="v9-arc b" cx="60" cy="60" r="50" stroke-dasharray="100.5 213.6" stroke-dashoffset="-209.4"/>
+  </svg>
+  <div class="v9-center">
+    <div>
+      <div class="v9-frac">2<span>/3</span></div>
+      <div class="v9-sub">Completed</div>
+    </div>
+  </div>
+</div>
+<div class="v9-list">
+  <div class="v9-row pending">
+    <div class="v9-ic b">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></svg>
+    </div>
+    <div class="v9-body">
+      <div class="v9-name"><span class="v9-dot b"></span>Guest registration</div>
+      <div class="v9-meta">Add your travel details</div>
+    </div>
+    <span class="v9-tag pend">1 pending</span>
+  </div>
+  <div class="v9-row">
+    <div class="v9-ic g">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 8-7 9-4-1-7-4.6-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    </div>
+    <div class="v9-body">
+      <div class="v9-name"><span class="v9-dot g"></span>Security deposit</div>
+      <div class="v9-meta">Authorized successfully</div>
+    </div>
+    <span class="v9-tag done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"/></svg>Done</span>
+  </div>
+  <div class="v9-row">
+    <div class="v9-ic g">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/><path d="M7 15h4"/></svg>
+    </div>
+    <div class="v9-body">
+      <div class="v9-name"><span class="v9-dot g"></span>Balance payment</div>
+      <div class="v9-meta">€340 paid in full</div>
+    </div>
+    <span class="v9-tag done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l4 4L19 6"/></svg>Done</span>
+  </div>
+</div></div>
+    </div>
+
+    <div class="col">
+      <span class="lab">O · Aurora Glass</span>
+      <div class="desc">Tarjetas de cristal esmerilado flotando sobre una aurora de malla vibrante.</div>
+      <div class="frame v10"><div class="wrap">
+<div class="head">
+<div>
+<p class="eyb">Tu estancia</p>
+<h1 class="h1">Complete your check-in</h1>
+</div>
+<div class="ring" role="img" aria-label="2 of 3 done">
+<svg width="54" height="54" viewBox="0 0 54 54"><circle class="trk" cx="27" cy="27" r="23" fill="none" stroke-width="5"/><circle class="arc" cx="27" cy="27" r="23" fill="none" stroke-width="5" stroke-dasharray="144.5" stroke-dashoffset="48.2"/></svg>
+<div class="num"><b>2/3</b><span>Done</span></div>
+</div>
+</div>
+<div class="list">
+<div class="tile focus">
+<div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3.1-6 7-6s7 2.5 7 6"/></svg></div>
+<div class="txt"><p class="tt">Guest registration</p><span class="ts">Add your details to continue</span></div>
+<span class="pill go">1 pending<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span>
+</div>
+<div class="tile">
+<div class="ico gr"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
+<div class="txt"><p class="tt">Security deposit</p><span class="ts">Authorised</span></div>
+<span class="pill done"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-11"/></svg>Done</span>
+</div>
+<div class="tile">
+<div class="ico gr"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 10h18"/></svg></div>
+<div class="txt"><p class="tt">Balance payment</p><span class="ts">Paid in full</span></div>
+<span class="amt">€340</span>
+</div>
+</div>
+</div></div>
+    </div>
+
+  </div>
+</body>
+</html>
